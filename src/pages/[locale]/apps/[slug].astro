@@ -52,14 +52,14 @@ const relatedTitle = locale === "de" ? "Vergleiche" : "Comparisons"
 	<Breadcrumbs locale={locale} crumbs={crumbs} />
 	{
 		slug === "onsand" && (
-			<p class="onsand-pick mb-3 inline-block bg-pick px-3 py-1 text-sm text-accent">
+			<p class="onsand-pick eyebrow mb-4 inline-block border-2 border-accent px-3 py-1.5 text-accent">
 				{pick.pickBadge}
 			</p>
 		)
 	}
-	<p class="text-sm uppercase tracking-wide text-muted">{copy.tagline}</p>
-	<h1 class="mt-2 text-4xl">{copy.pageH1}</h1>
-	<p class="mt-4 text-lg text-muted">{copy.bestFor}</p>
+	<p class="eyebrow">{copy.tagline}</p>
+	<h1 class="mt-3 text-4xl sm:text-5xl">{copy.pageH1}</h1>
+	<p class="mt-5 max-w-2xl text-lg text-muted sm:text-xl">{copy.bestFor}</p>
 	{
 		copy.body.map((paragraph) => (
 			<p class="mt-4 max-w-2xl text-muted">{paragraph}</p>
@@ -72,16 +72,18 @@ const relatedTitle = locale === "de" ? "Vergleiche" : "Comparisons"
 			</p>
 		)
 	}
-	<section class="mt-8" aria-labelledby="limits-heading">
-		<h2 id="limits-heading" class="text-2xl">{limitationsTitle}</h2>
+	<section class="mt-12" aria-labelledby="limits-heading">
+		<hr class="court-rule" />
+		<h2 id="limits-heading" class="mt-6 text-3xl">{limitationsTitle}</h2>
 		<ul class="mt-3 list-disc pl-5 text-muted">
 			{copy.limitations.map((item) => <li>{item}</li>)}
 		</ul>
 	</section>
 	{
 		related.length > 0 && (
-			<section class="mt-8" aria-labelledby="related-heading">
-				<h2 id="related-heading" class="text-2xl">{relatedTitle}</h2>
+			<section class="mt-12" aria-labelledby="related-heading">
+				<hr class="court-rule" />
+				<h2 id="related-heading" class="mt-6 text-3xl">{relatedTitle}</h2>
 				<ul class="mt-3 flex flex-col gap-2">
 					{related.map((pair) => (
 						<li>

@@ -17,51 +17,54 @@ const labels = featureLabels[locale]
 const yn = yesNo[locale]
 const leftApp = getApp(left)
 const rightApp = getApp(right)
+const cells = [
+	{ app: leftApp, id: left },
+	{ app: rightApp, id: right },
+] as const
 ---
 
-<div class="overflow-x-auto">
-	<table class="w-full min-w-[28rem] border-collapse text-left text-sm">
+<div class="court-frame overflow-x-auto bg-card">
+	<table class="w-full min-w-[30rem] border-collapse text-left text-sm">
 		<thead>
 			<tr>
-				<th class="border-b border-rule py-2 pr-3" scope="col">
+				<th class="border-b-2 border-ink px-4 py-3 font-display text-base font-semibold" scope="col">
 					{locale === "de" ? "Funktion" : "Feature"}
 				</th>
-				<th
-					class:list={[
-						"border-b border-rule px-3 py-2",
-						left === "onsand" && "onsand-pick bg-pick",
-					]}
-					scope="col"
-				>
-					{appCopy[locale][left].name}
-				</th>
-				<th class="border-b border-rule px-3 py-2" scope="col">{appCopy[locale][right].name}</th>
+				{
+					cells.map((cell) => (
+						<th
+							class:list={[
+								"border-b-2 border-ink px-4 py-3 font-display text-base font-semibold",
+								cell.id === "onsand" && "onsand-pick bg-pick",
+							]}
+							scope="col"
+						>
+							{appCopy[locale][cell.id].name}
+						</th>
+					))
+				}
 			</tr>
 		</thead>
 		<tbody>
 			{
 				FEATURE_KEYS.map((key) => (
-					<tr>
-						<th class="border-b border-rule py-2 pr-3 font-medium" scope="row">
+					<tr class="even:bg-canvas/40">
+						<th class="border-b border-rule px-4 py-3 font-display font-medium text-ink" scope="row">
 							{labels[key]}
 						</th>
-						<td
-							class:list={[
-								"border-b border-rule px-3 py-2",
-								left === "onsand" && "onsand-pick bg-pick",
-							]}
-						>
-							{leftApp.features[key] ? yn.yes : yn.no}
-							{DIMENSION_LEADERS[key] === left && (
-								<span class="ml-1 text-xs text-accent">{yn.leads}</span>
-							)}
-						</td>
-						<td class="border-b border-rule px-3 py-2">
-							{rightApp.features[key] ? yn.yes : yn.no}
-							{DIMENSION_LEADERS[key] === right && (
-								<span class="ml-1 text-xs text-accent">{yn.leads}</span>
-							)}
-						</td>
+						{cells.map((cell) => (
+							<td
+								class:list={[
+									"border-b border-rule px-4 py-3",
+									cell.id === "onsand" && "onsand-pick bg-pick",
+								]}
+							>
+								<span class:list={["mark", cell.app.features[key] ? "mark-yes" : "mark-no"]}>
+									{cell.app.features[key] ? `✓ ${yn.yes}` : `— ${yn.no}`}
+								</span>
+								{DIMENSION_LEADERS[key] === cell.id && <span class="lead-flag">{yn.leads}</span>}
+							</td>
+						))}
 					</tr>
 				))
 			}

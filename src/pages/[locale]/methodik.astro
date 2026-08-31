@@ -28,6 +28,6 @@ const crumbs = [
 	jsonLd={breadcrumbJsonLd(locale, crumbs)}
 >
 	<Breadcrumbs locale={locale} crumbs={crumbs} />
-	<h1 class="text-4xl">{copy.h1}</h1>
-	{copy.body.map((paragraph) => <p class="mt-4 max-w-2xl text-muted">{paragraph}</p>)}
+	<h1 class="text-4xl sm:text-5xl">{copy.h1}</h1>
+	{copy.body.map((paragraph) => <p class="mt-5 max-w-2xl text-muted">{paragraph}</p>)}
 </BaseLayout>

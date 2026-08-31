@@ -12,7 +12,7 @@ const { crumbs, locale } = Astro.props
 const label = locale === "de" ? "Brotkrumen" : "Breadcrumb"
 ---
 
-<nav aria-label={label} class="mb-6 text-sm text-muted">
+<nav aria-label={label} class="eyebrow mb-8">
 	<ol class="flex flex-wrap items-center gap-2">
 		{
 			crumbs.map((crumb, index) => (

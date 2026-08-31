@@ -36,10 +36,10 @@ const crumbs = [
 	jsonLd={breadcrumbJsonLd(locale, crumbs)}
 >
 	<Breadcrumbs locale={locale} crumbs={crumbs} />
-	<h1 class="text-4xl">{doc.title}</h1>
+	<h1 class="text-4xl sm:text-5xl">{doc.title}</h1>
 	{
 		doc.sections.map((section) => (
-			<section class="mt-8">
+			<section class="mt-10">
 				<h2 class="text-2xl">{section.heading}</h2>
 				{section.paragraphs.map((paragraph) => (
 					<p class="mt-3 max-w-2xl text-muted">{paragraph}</p>

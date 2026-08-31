@@ -41,17 +41,16 @@ const crumbs = [
 	jsonLd={[breadcrumbJsonLd(locale, crumbs), vsFaqJsonLd(pair.slug, locale)]}
 >
 	<Breadcrumbs locale={locale} crumbs={crumbs} />
-	<h1 class="text-4xl">{copy.h1}</h1>
-	<p class="mt-4 max-w-2xl text-lg text-muted">{copy.intro}</p>
-	<p class="mt-6 font-serif text-xl">{copy.verdict}</p>
-	<a
-		class="onsand-pick mt-4 inline-block bg-accent px-5 py-3 text-card no-underline"
-		href={ONSAND_APP_URL}
-		rel="noopener"
-	>
-		{pick.pickCta}
-	</a>
-	<section class="mt-10">
+	<h1 class="text-4xl sm:text-5xl">{copy.h1}</h1>
+	<p class="mt-5 max-w-2xl text-lg text-muted sm:text-xl">{copy.intro}</p>
+	<aside class="onsand-pick court-frame mt-8 max-w-2xl bg-pick p-6" aria-label={pick.pickBadge}>
+		<p class="eyebrow text-accent">{pick.pickBadge}</p>
+		<p class="mt-3 font-display text-xl font-semibold text-ink">{copy.verdict}</p>
+		<a class="cta-button mt-5" href={ONSAND_APP_URL} rel="noopener">
+			{pick.pickCta}
+		</a>
+	</aside>
+	<section class="mt-12">
 		<VsTable left={pair.left} locale={locale} right={pair.right} />
 	</section>
 	<p class="mt-8">

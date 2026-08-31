@@ -27,14 +27,10 @@ const clubLabel = locale === "de" ? "Vereinssoftware auf onsand.cloud" : "Club s
 const pickCta = hubCopy[locale].pickCta
 ---
 
-<nav class="mt-8 flex flex-col gap-2" aria-label="Downloads">
+<nav class="mt-10 flex flex-col items-start gap-2.5" aria-label="Downloads">
 	{
 		id === "onsand" ? (
-			<a
-				class="onsand-pick inline-flex w-fit bg-accent px-5 py-3 text-card no-underline"
-				href={app.siteUrl}
-				rel="noopener"
-			>
+			<a class="cta-button onsand-pick mb-2" href={app.siteUrl} rel="noopener">
 				{pickCta}
 			</a>
 		) : (

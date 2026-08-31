@@ -20,8 +20,8 @@ const disclosure =
 const compareLabel = locale === "de" ? "Vergleiche" : "Comparisons"
 ---
 
-<footer class="border-t border-rule bg-card">
-	<div class="mx-auto flex max-w-4xl flex-col gap-3 px-4 py-8 text-sm text-muted">
+<footer class="border-t-2 border-ink bg-card">
+	<div class="mx-auto flex max-w-4xl flex-col gap-4 px-5 py-10 text-sm text-muted">
 		<p>{disclosure}</p>
 		<nav class="flex flex-wrap gap-4" aria-label={compareLabel}>
 			<a href={pagePath(locale, "/apps/onsand")}>

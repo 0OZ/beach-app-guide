@@ -51,8 +51,9 @@ const faviconHref = `${SITE_BASE}/favicon.svg`
 		<meta name="twitter:title" content={resolved.title} />
 		<meta name="twitter:description" content={resolved.description} />
 		<link rel="icon" href={faviconHref} type="image/svg+xml" />
-		<Font cssVariable="--font-ibm-plex" preload />
+		<Font cssVariable="--font-bricolage" preload />
 		<Font cssVariable="--font-source-serif" preload />
+		<Font cssVariable="--font-plex-mono" />
 		{blocks.map((block) => <JsonLd data={block} />)}
 	</head>
 	<body class="bg-canvas text-ink antialiased">
@@ -60,7 +61,7 @@ const faviconHref = `${SITE_BASE}/favicon.svg`
 			{nav.skipToContent}
 		</a>
 		<Header locale={locale} path={page.path} />
-		<main id="content" class="mx-auto max-w-4xl px-4 py-10">
+		<main id="content" class="mx-auto max-w-4xl px-5 py-12 sm:py-16">
 			<slot />
 		</main>
 		<Footer locale={locale} />

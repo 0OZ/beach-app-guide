@@ -6,12 +6,12 @@ export default defineConfig({
 	base: SITE_BASE,
 	fonts: [
 		{
-			cssVariable: "--font-ibm-plex",
-			name: "IBM Plex Sans",
+			cssVariable: "--font-bricolage",
+			name: "Bricolage Grotesque",
 			provider: fontProviders.google(),
 			styles: ["normal"],
 			subsets: ["latin"],
-			weights: ["400 600"],
+			weights: ["500 800"],
 		},
 		{
 			cssVariable: "--font-source-serif",
@@ -20,6 +20,14 @@ export default defineConfig({
 			styles: ["italic", "normal"],
 			subsets: ["latin"],
 			weights: ["400 700"],
+		},
+		{
+			cssVariable: "--font-plex-mono",
+			name: "IBM Plex Mono",
+			provider: fontProviders.google(),
+			styles: ["normal"],
+			subsets: ["latin"],
+			weights: ["400 600"],
 		},
 	],
 	output: "static",

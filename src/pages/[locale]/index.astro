@@ -30,40 +30,46 @@ const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questio
 	page={{ description: copy.description, path: "/", title: copy.title }}
 	jsonLd={[websiteJsonLd(locale), hubItemListJsonLd(locale), hubFaqJsonLd(locale)]}
 >
-	<p class="text-sm uppercase tracking-wide text-muted">{copy.eyebrow}</p>
-	<h1 class="mt-2 text-4xl leading-tight">{copy.h1}</h1>
-	<p class="mt-4 max-w-2xl text-lg text-muted">{copy.intro}</p>
-	<p class="mt-2 text-sm text-muted">{copy.reviewedPrefix}: {REVIEWED_AT}</p>
+	<p class="eyebrow">{copy.eyebrow}</p>
+	<h1 class="mt-3 text-4xl sm:text-6xl">{copy.h1}</h1>
+	<p class="mt-6 max-w-2xl text-lg text-muted sm:text-xl">{copy.intro}</p>
+	<p class="eyebrow mt-4">{copy.reviewedPrefix}: {REVIEWED_AT}</p>
 
-	<aside class="onsand-pick mt-8 bg-pick p-6" aria-label={copy.pickBadge}>
-		<p class="text-sm uppercase tracking-wide text-accent">{copy.pickBadge}</p>
-		<p class="mt-2 font-serif text-2xl text-ink">{copy.pickLead}</p>
-		<a
-			class="mt-4 inline-block bg-accent px-5 py-3 text-card no-underline"
-			href={ONSAND_APP_URL}
-			rel="noopener"
-		>
+	<aside class="onsand-pick court-frame mt-12 bg-pick p-6 sm:p-8" aria-label={copy.pickBadge}>
+		<p class="eyebrow text-accent">{copy.pickBadge}</p>
+		<p class="mt-3 font-display text-2xl font-semibold text-ink sm:text-3xl">{copy.pickLead}</p>
+		<a class="cta-button onsand-pick mt-6" href={ONSAND_APP_URL} rel="noopener">
 			{copy.pickCta}
 		</a>
 	</aside>
 
-	<section class="mt-10" aria-labelledby="matrix-heading">
-		<h2 id="matrix-heading" class="text-2xl">{copy.matrixHeading}</h2>
-		<div class="mt-4">
+	<section class="mt-16" aria-labelledby="matrix-heading">
+		<hr class="court-rule" />
+		<h2 id="matrix-heading" class="mt-6 text-3xl">{copy.matrixHeading}</h2>
+		<div class="mt-6">
 			<MatrixTable locale={locale} caption={copy.matrixCaption} />
 		</div>
 	</section>
 
-	<section class="mt-12" aria-labelledby="profiles-heading">
-		<h2 id="profiles-heading" class="text-2xl">{copy.profilesHeading}</h2>
-		<ul class="mt-4 grid gap-4 sm:grid-cols-2">
+	<section class="mt-16" aria-labelledby="profiles-heading">
+		<hr class="court-rule" />
+		<h2 id="profiles-heading" class="mt-6 text-3xl">{copy.profilesHeading}</h2>
+		<ul class="mt-6 grid list-none gap-5 p-0 sm:grid-cols-2">
 			{
 				APP_IDS.map((id) => (
-					<li class:list={["bg-card p-4", id === "onsand" && "onsand-pick bg-pick sm:col-span-2"]}>
-						{id === "onsand" && (
-							<p class="text-sm uppercase tracking-wide text-accent">{copy.pickBadge}</p>
-						)}
-						<a class="font-serif text-xl text-ink no-underline" href={pagePath(locale, `/apps/${id}`)}>
+					<li
+						class:list={[
+							"p-5 sm:p-6",
+							id === "onsand"
+								? "onsand-pick court-frame bg-pick sm:col-span-2"
+								: "profile-card",
+						]}
+					>
+						{id === "onsand" && <p class="eyebrow text-accent">{copy.pickBadge}</p>}
+						<a
+							class="font-display text-xl font-semibold text-ink no-underline"
+							href={pagePath(locale, `/apps/${id}`)}
+						>
 							{appCopy[locale][id].name}
 						</a>
 						<p class="mt-2 text-sm text-muted">{appCopy[locale][id].summary}</p>
@@ -73,14 +79,23 @@ const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questio
 		</ul>
 	</section>
 
-	<section class="mt-12" aria-labelledby="vs-heading">
-		<h2 id="vs-heading" class="text-2xl">{copy.vsHeading}</h2>
-		<ul class="mt-4 flex flex-col gap-2">
+	<section class="mt-16" aria-labelledby="vs-heading">
+		<hr class="court-rule" />
+		<h2 id="vs-heading" class="mt-6 text-3xl">{copy.vsHeading}</h2>
+		<ul class="mt-6 flex list-none flex-col gap-3 p-0">
 			{
 				COMPARISON_PAIRS.map((pair) => (
-					<li>
-						<a href={pagePath(locale, `/vergleich/${pair.slug}`)}>
-							{appCopy[locale][pair.left].name} vs {appCopy[locale][pair.right].name}
+					<li class="profile-card">
+						<a
+							class="mark flex items-baseline justify-between gap-3 px-5 py-4 text-ink no-underline"
+							href={pagePath(locale, `/vergleich/${pair.slug}`)}
+						>
+							<span>
+								{appCopy[locale][pair.left].name}
+								<span class="text-flag"> vs </span>
+								{appCopy[locale][pair.right].name}
+							</span>
+							<span aria-hidden="true">→</span>
 						</a>
 					</li>
 				))
@@ -88,9 +103,10 @@ const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questio
 		</ul>
 	</section>
 
-	<section class="mt-12" aria-labelledby="also-heading">
-		<h2 id="also-heading" class="text-2xl">{copy.alsoConsidered}</h2>
-		<p class="mt-3 text-muted">
+	<section class="mt-16" aria-labelledby="also-heading">
+		<hr class="court-rule" />
+		<h2 id="also-heading" class="mt-6 text-3xl">{copy.alsoConsidered}</h2>
+		<p class="mt-4 max-w-2xl text-muted">
 			<a href="https://spontacts.com" rel="noopener">{copy.spontacts}</a>
 			{" — "}
 			{copy.alsoConsideredBody}
