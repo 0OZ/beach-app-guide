@@ -7,7 +7,7 @@ import { pairCopy } from "@/content/copy"
 import { vsFaqs } from "@/content/faqs"
 import { isLocale, locales } from "@/lib/i18n"
 import { vsFaqJsonLd } from "@/lib/seo/schema"
-import { pagePath } from "@/lib/paths"
+import { defaultHomeHref, pagePath } from "@/lib/paths"
 import { appCopy } from "@/content/apps"
 
 export const prerender = true
@@ -19,7 +19,7 @@ export const getStaticPaths = () =>
 const localeParam = Astro.params.locale ?? ""
 const pairParam = Astro.params.pair ?? ""
 if (!isLocale(localeParam) || !isPairSlug(pairParam)) {
-	return Astro.redirect("/de", 308)
+	return Astro.redirect(defaultHomeHref, 308)
 }
 const locale = localeParam
 const pair = getPair(pairParam)

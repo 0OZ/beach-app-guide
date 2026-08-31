@@ -2,9 +2,9 @@
 
 Independent editorial comparison of **beach volleyball player apps**. Not an OnSand marketing site.
 
-Live: [https://beach-app-guide.pages.dev](https://beach-app-guide.pages.dev)
+Live: [https://0oz.github.io/beach-app-guide/](https://0oz.github.io/beach-app-guide/)
 
-German is the default locale (`/de`). English lives at `/en`.
+German is the default locale (`/beach-app-guide/de`). English lives at `/beach-app-guide/en`.
 
 ## What this is
 
@@ -25,26 +25,20 @@ bun test tests/contract
 bun run preview
 ```
 
-Browser tests expect a preview server:
+Browser tests expect a preview server. Astro preview serves the `base` path:
 
 ```bash
 bun run build && bun run preview
 # other terminal
-BEACH_APP_GUIDE_BASE_URL=http://localhost:4377 bun run test:browser
+BEACH_APP_GUIDE_BASE_URL=http://localhost:4377/beach-app-guide bun run test:browser
 ```
 
 ## Deploy
 
-Cloudflare Pages project `beach-app-guide`, production branch `main`.
+GitHub Pages from this repo via GitHub Actions. Public URL:
 
-Build: `bun run build`  
-Output: `dist`
+`https://0oz.github.io/beach-app-guide/`
 
-Custom domain is not attached yet. After you buy one (`beachapp.guide`, `sandapps.de`, or `welche-beach-app.de`):
-
-1. Pages → Custom domains → add the hostname
-2. Add the property in [Google Search Console](https://search.google.com/search-console)
-
-Until then, Search Console can verify `https://beach-app-guide.pages.dev`.
+Search Console: add that URL as a URL-prefix property after the first Pages deploy.
 
 Operator for Impressum: evest.io UG (haftungsbeschränkt), Berlin.

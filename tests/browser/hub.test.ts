@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { type Browser, chromium, type Page } from "playwright";
 
-const BASE_URL = process.env.BEACH_APP_GUIDE_BASE_URL ?? "http://localhost:4377";
+const BASE_URL = process.env.BEACH_APP_GUIDE_BASE_URL ?? "http://localhost:4377/beach-app-guide";
 
 let browser: Browser;
 

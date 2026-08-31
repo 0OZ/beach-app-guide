@@ -1,8 +1,9 @@
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
-import { SITE_URL } from "./src/lib/site";
+import { SITE_BASE, SITE_ORIGIN } from "./src/lib/site";
 
 export default defineConfig({
+	base: SITE_BASE,
 	fonts: [
 		{
 			cssVariable: "--font-ibm-plex",
@@ -28,7 +29,7 @@ export default defineConfig({
 			status: 308,
 		},
 	},
-	site: SITE_URL,
+	site: SITE_ORIGIN,
 	vite: {
 		plugins: [tailwindcss()],
 	},

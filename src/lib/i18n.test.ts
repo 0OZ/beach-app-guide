@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { defaultLocale, isLocale, locales, xDefaultLocale } from "./i18n";
 import { localizedAlternates, pagePath, pageUrl } from "./paths";
-import { SITE_URL } from "./site";
+import { SITE_BASE, SITE_ORIGIN, SITE_URL } from "./site";
 
 describe("i18n", () => {
 	test("German is the default and x-default locale", () => {
@@ -13,10 +13,18 @@ describe("i18n", () => {
 	});
 });
 
+describe("GitHub Pages origin", () => {
+	test("uses the public github.io project URL", () => {
+		expect(SITE_ORIGIN).toBe("https://0oz.github.io");
+		expect(SITE_BASE).toBe("/beach-app-guide");
+		expect(SITE_URL).toBe("https://0oz.github.io/beach-app-guide");
+	});
+});
+
 describe("paths", () => {
-	test("builds locale-prefixed paths", () => {
-		expect(pagePath("de", "/")).toBe("/de");
-		expect(pagePath("en", "/apps/onsand")).toBe("/en/apps/onsand");
+	test("builds locale-prefixed paths under the GitHub Pages base", () => {
+		expect(pagePath("de", "/")).toBe("/beach-app-guide/de");
+		expect(pagePath("en", "/apps/onsand")).toBe("/beach-app-guide/en/apps/onsand");
 	});
 
 	test("builds absolute page URLs from the site origin", () => {

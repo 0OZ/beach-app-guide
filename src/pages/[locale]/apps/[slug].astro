@@ -4,6 +4,7 @@ import AppCta from "@/components/compare/app-cta.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { appCopy } from "@/content/apps"
 import { isLocale, locales } from "@/lib/i18n"
+import { defaultHomeHref } from "@/lib/paths"
 import { profileSoftwareJsonLd } from "@/lib/seo/schema"
 
 export const prerender = true
@@ -13,7 +14,7 @@ export const getStaticPaths = () =>
 const localeParam = Astro.params.locale ?? ""
 const slugParam = Astro.params.slug ?? ""
 if (!isLocale(localeParam) || !isAppId(slugParam)) {
-	return Astro.redirect("/de", 308)
+	return Astro.redirect(defaultHomeHref, 308)
 }
 const locale = localeParam
 const slug = slugParam

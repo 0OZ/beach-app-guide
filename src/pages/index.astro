@@ -1,3 +1,4 @@
 ---
-return Astro.redirect("/de", 308)
+import { defaultHomeHref } from "@/lib/paths"
+return Astro.redirect(defaultHomeHref, 308)
 ---

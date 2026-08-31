@@ -36,6 +36,13 @@ describe("built hub HTML", () => {
 		expect(html).toContain('hreflang="en"');
 		expect(html).toContain('hreflang="x-default"');
 	});
+
+	test("internal links use the GitHub Pages base path", () => {
+		const html = read("de/index.html");
+		expect(html).toContain('href="/beach-app-guide/de/methodik"');
+		expect(html).toContain('href="https://0oz.github.io/beach-app-guide/de"');
+		expect(html).not.toContain('href="/de/methodik"');
+	});
 });
 
 describe("built vs HTML", () => {
