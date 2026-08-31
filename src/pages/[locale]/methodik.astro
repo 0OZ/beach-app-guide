@@ -29,5 +29,16 @@ const crumbs = [
 >
 	<Breadcrumbs locale={locale} crumbs={crumbs} />
 	<h1 class="text-4xl sm:text-5xl">{copy.h1}</h1>
-	{copy.body.map((paragraph) => <p class="mt-5 max-w-2xl text-muted">{paragraph}</p>)}
+	<hr class="court-rule mt-8" />
+	<div class="soft-card mt-8 max-w-2xl">
+		{
+			copy.body.map((paragraph, index) =>
+				index === 0 ? (
+					<p class="mt-0 text-lg text-ink sm:text-xl">{paragraph}</p>
+				) : (
+					<p class="mt-5 text-muted">{paragraph}</p>
+				),
+			)
+		}
+	</div>
 </BaseLayout>
