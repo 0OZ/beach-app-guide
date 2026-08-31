@@ -42,6 +42,7 @@ export const apps: Record<AppId, CatalogApp> = {
 		features: feature({
 			courtBooking: false,
 			courtDirectory: true,
+			freeForPlayers: true,
 			inAppChat: false,
 			openGames: true,
 			ratingsOrStats: false,
@@ -61,6 +62,7 @@ export const apps: Record<AppId, CatalogApp> = {
 		features: feature({
 			courtBooking: false,
 			courtDirectory: true,
+			freeForPlayers: false,
 			inAppChat: true,
 			openGames: true,
 			ratingsOrStats: false,
@@ -81,6 +83,7 @@ export const apps: Record<AppId, CatalogApp> = {
 		features: feature({
 			courtBooking: false,
 			courtDirectory: true,
+			freeForPlayers: true,
 			inAppChat: true,
 			openGames: true,
 			ratingsOrStats: true,
@@ -100,6 +103,7 @@ export const apps: Record<AppId, CatalogApp> = {
 		features: feature({
 			courtBooking: true,
 			courtDirectory: true,
+			freeForPlayers: false,
 			inAppChat: true,
 			openGames: true,
 			ratingsOrStats: true,

@@ -1,3 +1,4 @@
+import type { FeatureKey } from "../catalog/matrix";
 import type { Locale } from "../lib/i18n";
 import { SITE_NAME } from "../lib/site";
 
@@ -96,22 +97,13 @@ export const hubCopy: Record<Locale, HubCopy> = {
 	},
 };
 
-export type FeatureLabelCopy = Record<
-	| "courtBooking"
-	| "courtDirectory"
-	| "inAppChat"
-	| "openGames"
-	| "ratingsOrStats"
-	| "skillMatching"
-	| "trainingGroups"
-	| "waitlist",
-	string
->;
+export type FeatureLabelCopy = Record<FeatureKey, string>;
 
 export const featureLabels: Record<Locale, FeatureLabelCopy> = {
 	de: {
 		courtBooking: "Platzbuchung in der App",
 		courtDirectory: "Platzverzeichnis",
+		freeForPlayers: "Kostenlos für Spieler",
 		inAppChat: "In-App-Chat",
 		openGames: "Offene Spiele",
 		ratingsOrStats: "Ratings / Stats",
@@ -122,6 +114,7 @@ export const featureLabels: Record<Locale, FeatureLabelCopy> = {
 	en: {
 		courtBooking: "In-app court booking",
 		courtDirectory: "Court directory",
+		freeForPlayers: "Free for players",
 		inAppChat: "In-app chat",
 		openGames: "Open games",
 		ratingsOrStats: "Ratings / stats",

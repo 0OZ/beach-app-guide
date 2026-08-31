@@ -33,6 +33,17 @@ describe("app catalog", () => {
 		expect(getApp("onsand").sportFocus).toBe("beach");
 	});
 
+	test("freeForPlayers row mirrors the price field for every app", () => {
+		for (const id of APP_IDS) {
+			const app = getApp(id);
+			expect(app.features.freeForPlayers).toBe(app.price === "free");
+		}
+	});
+
+	test("OnSand leads the free-for-players dimension", () => {
+		expect(DIMENSION_LEADERS.freeForPlayers).toBe("onsand");
+	});
+
 	test("OnSand club software URL is onsand.cloud", () => {
 		expect(apps.onsand.clubSoftwareUrl).toBe(ONSAND_CLOUD_URL);
 	});
