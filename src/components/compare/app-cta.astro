@@ -1,0 +1,43 @@
+---
+import type { AppId } from "@/catalog/apps"
+import { getApp } from "@/catalog/apps"
+import { appCopy } from "@/content/apps"
+import type { Locale } from "@/lib/i18n"
+import {
+	ONSAND_CLOUD_URL,
+	ONSAND_COURTS_URL,
+	ONSAND_MATCHMAKING_URL,
+} from "@/catalog/urls"
+
+type Props = {
+	id: AppId
+	locale: Locale
+}
+
+const { id, locale } = Astro.props
+const app = getApp(id)
+const copy = appCopy[locale][id]
+const storeLabel = locale === "de" ? "Offizielle Website" : "Official site"
+const appleLabel = locale === "de" ? "App Store" : "App Store"
+const playLabel = locale === "de" ? "Google Play" : "Google Play"
+const matchmakingLabel = locale === "de" ? "Spiele finden auf OnSand" : "Find games on OnSand"
+const courtsLabel = locale === "de" ? "Beachvolleyball-Plätze" : "Beach volleyball courts"
+const clubLabel = locale === "de" ? "Vereinssoftware auf onsand.cloud" : "Club software on onsand.cloud"
+---
+
+<nav class="mt-8 flex flex-col gap-2" aria-label="Downloads">
+	<a href={app.siteUrl} rel="noopener">{storeLabel}: {copy.name}</a>
+	{app.appleUrl && <a href={app.appleUrl} rel="noopener">{appleLabel}</a>}
+	{app.playUrl && <a href={app.playUrl} rel="noopener">{playLabel}</a>}
+	{
+		id === "onsand" && (
+			<>
+				<a href={ONSAND_MATCHMAKING_URL} rel="noopener">{matchmakingLabel}</a>
+				<a href={ONSAND_COURTS_URL} rel="noopener">{courtsLabel}</a>
+				{app.clubSoftwareUrl && (
+					<a href={ONSAND_CLOUD_URL} rel="noopener">{clubLabel}</a>
+				)}
+			</>
+		)
+	}
+</nav>

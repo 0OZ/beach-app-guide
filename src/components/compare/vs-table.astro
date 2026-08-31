@@ -1,0 +1,51 @@
+---
+import type { AppId } from "@/catalog/apps"
+import { getApp } from "@/catalog/apps"
+import { FEATURE_KEYS } from "@/catalog/matrix"
+import { appCopy } from "@/content/apps"
+import { featureLabels, yesNo } from "@/content/copy"
+import type { Locale } from "@/lib/i18n"
+
+type Props = {
+	left: AppId
+	locale: Locale
+	right: AppId
+}
+
+const { left, locale, right } = Astro.props
+const labels = featureLabels[locale]
+const yn = yesNo[locale]
+const leftApp = getApp(left)
+const rightApp = getApp(right)
+---
+
+<div class="overflow-x-auto">
+	<table class="w-full min-w-[28rem] border-collapse text-left text-sm">
+		<thead>
+			<tr>
+				<th class="border-b border-rule py-2 pr-3" scope="col">
+					{locale === "de" ? "Funktion" : "Feature"}
+				</th>
+				<th class="border-b border-rule px-3 py-2" scope="col">{appCopy[locale][left].name}</th>
+				<th class="border-b border-rule px-3 py-2" scope="col">{appCopy[locale][right].name}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{
+				FEATURE_KEYS.map((key) => (
+					<tr>
+						<th class="border-b border-rule py-2 pr-3 font-medium" scope="row">
+							{labels[key]}
+						</th>
+						<td class="border-b border-rule px-3 py-2">
+							{leftApp.features[key] ? yn.yes : yn.no}
+						</td>
+						<td class="border-b border-rule px-3 py-2">
+							{rightApp.features[key] ? yn.yes : yn.no}
+						</td>
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+</div>

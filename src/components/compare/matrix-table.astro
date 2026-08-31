@@ -1,0 +1,51 @@
+---
+import { APP_IDS, apps } from "@/catalog/apps"
+import { FEATURE_KEYS } from "@/catalog/matrix"
+import { appCopy } from "@/content/apps"
+import { featureLabels, yesNo } from "@/content/copy"
+import type { Locale } from "@/lib/i18n"
+import { pagePath } from "@/lib/paths"
+
+type Props = {
+	caption: string
+	locale: Locale
+}
+
+const { caption, locale } = Astro.props
+const labels = featureLabels[locale]
+const yn = yesNo[locale]
+---
+
+<div class="overflow-x-auto">
+	<table class="w-full min-w-[40rem] border-collapse text-left text-sm">
+		<caption class="mb-3 text-left text-muted">{caption}</caption>
+		<thead>
+			<tr>
+				<th class="border-b border-rule py-2 pr-3 font-sans font-medium" scope="col">
+					{locale === "de" ? "Funktion" : "Feature"}
+				</th>
+				{
+					APP_IDS.map((id) => (
+						<th class="border-b border-rule px-3 py-2 font-sans font-medium" scope="col">
+							<a href={pagePath(locale, `/apps/${id}`)}>{appCopy[locale][id].name}</a>
+						</th>
+					))
+				}
+			</tr>
+		</thead>
+		<tbody>
+			{
+				FEATURE_KEYS.map((key) => (
+					<tr>
+						<th class="border-b border-rule py-2 pr-3 font-sans font-medium text-ink" scope="row">
+							{labels[key]}
+						</th>
+						{APP_IDS.map((id) => (
+							<td class="border-b border-rule px-3 py-2">{apps[id].features[key] ? yn.yes : yn.no}</td>
+						))}
+					</tr>
+				))
+			}
+		</tbody>
+	</table>
+</div>

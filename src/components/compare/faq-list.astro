@@ -1,0 +1,24 @@
+---
+import type { FaqItem } from "@/content/faqs"
+
+type Props = {
+	items: readonly FaqItem[]
+	title: string
+}
+
+const { items, title } = Astro.props
+---
+
+<section class="mt-12" aria-labelledby="faq-heading">
+	<h2 id="faq-heading" class="text-2xl">{title}</h2>
+	<dl class="mt-4 flex flex-col gap-6">
+		{
+			items.map((item) => (
+				<div>
+					<dt class="font-medium">{item.question}</dt>
+					<dd class="mt-1 text-muted">{item.answer}</dd>
+				</div>
+			))
+		}
+	</dl>
+</section>

@@ -1,0 +1,28 @@
+---
+import type { Locale } from "@/lib/i18n"
+import { locales } from "@/lib/i18n"
+import { pagePath } from "@/lib/paths"
+import { navCopy } from "@/content/copy"
+
+type Props = {
+	locale: Locale
+	path: string
+}
+
+const { locale, path } = Astro.props
+const nav = navCopy[locale]
+---
+
+<span class="flex gap-2">
+	{
+		locales.map((item) =>
+			item === locale ? (
+				<span aria-current="page">{nav.localeName[item]}</span>
+			) : (
+				<a href={pagePath(item, path)} hreflang={item}>
+					{nav.localeName[item]}
+				</a>
+			),
+		)
+	}
+</span>

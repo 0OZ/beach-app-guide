@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/components/layout/base-layout.astro"
+import { methodikCopy } from "@/content/methodik"
+import { isLocale, locales } from "@/lib/i18n"
+
+export const prerender = true
+export const getStaticPaths = () => locales.map((locale) => ({ params: { locale } }))
+
+const localeParam = Astro.params.locale ?? ""
+if (!isLocale(localeParam)) {
+	return Astro.redirect("/de", 308)
+}
+const locale = localeParam
+const copy = methodikCopy[locale]
+---
+
+<BaseLayout
+	locale={locale}
+	page={{ description: copy.description, path: "/methodik", title: copy.title }}
+>
+	<h1 class="text-4xl">{copy.h1}</h1>
+	{copy.body.map((paragraph) => <p class="mt-4 max-w-2xl text-muted">{paragraph}</p>)}
+</BaseLayout>

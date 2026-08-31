@@ -1,0 +1,26 @@
+---
+import LocaleSwitch from "@/components/layout/locale-switch.astro"
+import { navCopy } from "@/content/copy"
+import type { Locale } from "@/lib/i18n"
+import { pagePath } from "@/lib/paths"
+import { SITE_NAME } from "@/lib/site"
+
+type Props = {
+	locale: Locale
+	path: string
+}
+
+const { locale, path } = Astro.props
+const nav = navCopy[locale]
+---
+
+<header class="border-b border-rule bg-card">
+	<div class="mx-auto flex max-w-4xl flex-wrap items-baseline justify-between gap-4 px-4 py-5">
+		<a class="font-serif text-xl text-ink no-underline" href={pagePath(locale, "/")}>{SITE_NAME}</a>
+		<nav class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm" aria-label="Primary">
+			<a href={pagePath(locale, "/")}>{nav.home}</a>
+			<a href={pagePath(locale, "/methodik")}>{nav.methodology}</a>
+			<LocaleSwitch locale={locale} path={path} />
+		</nav>
+	</div>
+</header>

@@ -1,0 +1,48 @@
+---
+import VsTable from "@/components/compare/vs-table.astro"
+import FaqList from "@/components/compare/faq-list.astro"
+import BaseLayout from "@/components/layout/base-layout.astro"
+import { COMPARISON_PAIRS, getPair, isPairSlug } from "@/catalog/pairs"
+import { pairCopy } from "@/content/copy"
+import { vsFaqs } from "@/content/faqs"
+import { isLocale, locales } from "@/lib/i18n"
+import { vsFaqJsonLd } from "@/lib/seo/schema"
+import { pagePath } from "@/lib/paths"
+import { appCopy } from "@/content/apps"
+
+export const prerender = true
+export const getStaticPaths = () =>
+	locales.flatMap((locale) =>
+		COMPARISON_PAIRS.map((pair) => ({ params: { locale, pair: pair.slug } })),
+	)
+
+const localeParam = Astro.params.locale ?? ""
+const pairParam = Astro.params.pair ?? ""
+if (!isLocale(localeParam) || !isPairSlug(pairParam)) {
+	return Astro.redirect("/de", 308)
+}
+const locale = localeParam
+const pair = getPair(pairParam)
+const copy = pairCopy[locale][pair.slug]
+const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questions"
+const faqs = vsFaqs[pair.slug][locale]
+---
+
+<BaseLayout
+	locale={locale}
+	page={{ description: copy.description, path: `/vergleich/${pair.slug}`, title: copy.title }}
+	jsonLd={vsFaqJsonLd(pair.slug, locale)}
+>
+	<h1 class="text-4xl">{copy.h1}</h1>
+	<p class="mt-4 max-w-2xl text-lg text-muted">{copy.intro}</p>
+	<p class="mt-6 font-serif text-xl">{copy.verdict}</p>
+	<section class="mt-10">
+		<VsTable left={pair.left} locale={locale} right={pair.right} />
+	</section>
+	<p class="mt-8">
+		<a href={pagePath(locale, `/apps/${pair.left}`)}>{appCopy[locale][pair.left].name}</a>
+		{" · "}
+		<a href={pagePath(locale, `/apps/${pair.right}`)}>{appCopy[locale][pair.right].name}</a>
+	</p>
+	<FaqList items={faqs} title={faqTitle} />
+</BaseLayout>

@@ -1,0 +1,55 @@
+---
+import { APP_IDS, isAppId } from "@/catalog/apps"
+import AppCta from "@/components/compare/app-cta.astro"
+import BaseLayout from "@/components/layout/base-layout.astro"
+import { appCopy } from "@/content/apps"
+import { isLocale, locales } from "@/lib/i18n"
+import { profileSoftwareJsonLd } from "@/lib/seo/schema"
+
+export const prerender = true
+export const getStaticPaths = () =>
+	locales.flatMap((locale) => APP_IDS.map((slug) => ({ params: { locale, slug } })))
+
+const localeParam = Astro.params.locale ?? ""
+const slugParam = Astro.params.slug ?? ""
+if (!isLocale(localeParam) || !isAppId(slugParam)) {
+	return Astro.redirect("/de", 308)
+}
+const locale = localeParam
+const slug = slugParam
+const copy = appCopy[locale][slug]
+const limitationsTitle = locale === "de" ? "Wo die App nicht führt" : "Where it does not lead"
+---
+
+<BaseLayout
+	locale={locale}
+	page={{
+		description: copy.summary,
+		path: `/apps/${slug}`,
+		title: `${copy.name} | Beach App Guide`,
+	}}
+	jsonLd={profileSoftwareJsonLd(slug, locale)}
+>
+	<p class="text-sm uppercase tracking-wide text-muted">{copy.tagline}</p>
+	<h1 class="mt-2 text-4xl">{copy.name}</h1>
+	<p class="mt-4 text-lg text-muted">{copy.bestFor}</p>
+	{
+		copy.body.map((paragraph) => (
+			<p class="mt-4 max-w-2xl text-muted">{paragraph}</p>
+		))
+	}
+	{
+		copy.clubNote && (
+			<p class="mt-6 max-w-2xl">
+				{copy.clubNote}
+			</p>
+		)
+	}
+	<section class="mt-8" aria-labelledby="limits-heading">
+		<h2 id="limits-heading" class="text-2xl">{limitationsTitle}</h2>
+		<ul class="mt-3 list-disc pl-5 text-muted">
+			{copy.limitations.map((item) => <li>{item}</li>)}
+		</ul>
+	</section>
+	<AppCta id={slug} locale={locale} />
+</BaseLayout>

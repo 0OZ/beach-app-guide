@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/components/layout/base-layout.astro"
+import { isLegalSlug, LEGAL_SLUGS, legalCopy } from "@/content/legal"
+import { isLocale, locales } from "@/lib/i18n"
+
+export const prerender = true
+export const getStaticPaths = () =>
+	locales.flatMap((locale) => LEGAL_SLUGS.map((slug) => ({ params: { locale, slug } })))
+
+const localeParam = Astro.params.locale ?? ""
+const slugParam = Astro.params.slug ?? ""
+if (!isLocale(localeParam) || !isLegalSlug(slugParam)) {
+	return Astro.redirect("/de", 308)
+}
+const locale = localeParam
+const slug = slugParam
+const doc = legalCopy[locale][slug]
+---
+
+<BaseLayout
+	locale={locale}
+	page={{
+		description: doc.title,
+		path: `/legal/${slug}`,
+		title: `${doc.title} | Beach App Guide`,
+	}}
+>
+	<h1 class="text-4xl">{doc.title}</h1>
+	{
+		doc.sections.map((section) => (
+			<section class="mt-8">
+				<h2 class="text-2xl">{section.heading}</h2>
+				{section.paragraphs.map((paragraph) => (
+					<p class="mt-3 max-w-2xl text-muted">{paragraph}</p>
+				))}
+			</section>
+		))
+	}
+</BaseLayout>

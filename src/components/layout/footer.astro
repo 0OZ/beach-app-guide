@@ -1,0 +1,31 @@
+---
+import { LEGAL_SLUGS, legalCopy } from "@/content/legal"
+import { navCopy } from "@/content/copy"
+import type { Locale } from "@/lib/i18n"
+import { pagePath } from "@/lib/paths"
+import { SITE_NAME } from "@/lib/site"
+
+type Props = {
+	locale: Locale
+}
+
+const { locale } = Astro.props
+const nav = navCopy[locale]
+const disclosure =
+	locale === "de"
+		? `${SITE_NAME} wird von evest.io UG betrieben. OnSand ist eines der verglichenen Produkte.`
+		: `${SITE_NAME} is operated by evest.io UG. OnSand is one of the compared products.`
+---
+
+<footer class="border-t border-rule bg-card">
+	<div class="mx-auto flex max-w-4xl flex-col gap-3 px-4 py-8 text-sm text-muted">
+		<p>{disclosure}</p>
+		<nav class="flex flex-wrap gap-4" aria-label={nav.legal}>
+			{
+				LEGAL_SLUGS.map((slug) => (
+					<a href={pagePath(locale, `/legal/${slug}`)}>{legalCopy[locale][slug].title}</a>
+				))
+			}
+		</nav>
+	</div>
+</footer>
