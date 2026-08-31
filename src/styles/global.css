@@ -64,8 +64,6 @@ a:hover {
 	color: var(--color-card);
 }
 
-/* Signature: sand-court boundary lines — a double rule, like the taped
-   lines of a beach court, frames anything that carries a verdict. */
 .court-frame {
 	border: 2px solid var(--color-ink);
 	box-shadow:
