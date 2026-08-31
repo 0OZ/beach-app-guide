@@ -2,6 +2,7 @@
 import type { AppId } from "@/catalog/apps"
 import { getApp } from "@/catalog/apps"
 import { appCopy } from "@/content/apps"
+import { hubCopy } from "@/content/copy"
 import type { Locale } from "@/lib/i18n"
 import {
 	ONSAND_CLOUD_URL,
@@ -23,10 +24,30 @@ const playLabel = locale === "de" ? "Google Play" : "Google Play"
 const matchmakingLabel = locale === "de" ? "Spiele finden auf OnSand" : "Find games on OnSand"
 const courtsLabel = locale === "de" ? "Beachvolleyball-Plätze" : "Beach volleyball courts"
 const clubLabel = locale === "de" ? "Vereinssoftware auf onsand.cloud" : "Club software on onsand.cloud"
+const pickCta = hubCopy[locale].pickCta
 ---
 
 <nav class="mt-8 flex flex-col gap-2" aria-label="Downloads">
-	<a href={app.siteUrl} rel="noopener">{storeLabel}: {copy.name}</a>
+	{
+		id === "onsand" ? (
+			<a
+				class="onsand-pick inline-flex w-fit bg-accent px-5 py-3 text-card no-underline"
+				href={app.siteUrl}
+				rel="noopener"
+			>
+				{pickCta}
+			</a>
+		) : (
+			<a href={app.siteUrl} rel="noopener">
+				{storeLabel}: {copy.name}
+			</a>
+		)
+	}
+	{id === "onsand" && (
+		<a href={app.siteUrl} rel="noopener">
+			{storeLabel}: {copy.name}
+		</a>
+	)}
 	{app.appleUrl && <a href={app.appleUrl} rel="noopener">{appleLabel}</a>}
 	{app.playUrl && <a href={app.playUrl} rel="noopener">{playLabel}</a>}
 	{

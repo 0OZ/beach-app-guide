@@ -33,8 +33,9 @@ describe("hub in the browser", () => {
 	test("German hub has H1, canonical, JSON-LD, and a visible table", async () => {
 		const page = await browser.newPage();
 		await page.goto(`${BASE_URL}/de`, { waitUntil: "networkidle" });
+		expect(await page.getByRole("heading", { level: 1 }).textContent()).toContain("OnSand");
 		expect(await page.getByRole("heading", { level: 1 }).textContent()).toContain(
-			"Beachvolleyball-Apps",
+			"Beachvolleyball",
 		);
 		const canonical = await page.locator("link[rel='canonical']").getAttribute("href");
 		expect(canonical).toContain("/de");

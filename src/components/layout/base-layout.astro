@@ -7,6 +7,7 @@ import { navCopy } from "@/content/copy"
 import type { Locale } from "@/lib/i18n"
 import type { JsonLd as JsonLdValue } from "@/lib/seo/schema"
 import { resolveMetadata, type PageMetadata } from "@/lib/seo/metadata"
+import { SITE_BASE } from "@/lib/site"
 import "@/styles/global.css"
 
 type Props = {
@@ -19,6 +20,7 @@ const { jsonLd, locale, page } = Astro.props
 const resolved = resolveMetadata(locale, page)
 const nav = navCopy[locale]
 const blocks = jsonLd === undefined ? [] : Array.isArray(jsonLd) ? jsonLd : [jsonLd]
+const faviconHref = `${SITE_BASE}/favicon.svg`
 ---
 
 <!doctype html>
@@ -29,6 +31,7 @@ const blocks = jsonLd === undefined ? [] : Array.isArray(jsonLd) ? jsonLd : [jso
 		<meta name="generator" content={Astro.generator} />
 		<title>{resolved.title}</title>
 		<meta name="description" content={resolved.description} />
+		<meta name="author" content={resolved.author} />
 		<meta name="robots" content={resolved.robots} />
 		<link rel="canonical" href={resolved.canonical} />
 		{
@@ -43,10 +46,11 @@ const blocks = jsonLd === undefined ? [] : Array.isArray(jsonLd) ? jsonLd : [jso
 		<meta property="og:locale" content={resolved.locale} />
 		<meta property="og:locale:alternate" content={resolved.ogAlternateLocale} />
 		<meta property="og:url" content={resolved.canonical} />
+		<meta property="article:modified_time" content={resolved.modifiedTime} />
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content={resolved.title} />
 		<meta name="twitter:description" content={resolved.description} />
-		<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+		<link rel="icon" href={faviconHref} type="image/svg+xml" />
 		<Font cssVariable="--font-ibm-plex" preload />
 		<Font cssVariable="--font-source-serif" preload />
 		{blocks.map((block) => <JsonLd data={block} />)}

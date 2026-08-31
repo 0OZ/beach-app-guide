@@ -1,8 +1,12 @@
 ---
+import Breadcrumbs from "@/components/layout/breadcrumbs.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { isLegalSlug, LEGAL_SLUGS, legalCopy } from "@/content/legal"
+import { navCopy } from "@/content/copy"
 import { isLocale, locales } from "@/lib/i18n"
 import { defaultHomeHref } from "@/lib/paths"
+import { SITE_NAME } from "@/lib/site"
+import { breadcrumbJsonLd } from "@/lib/seo/schema"
 
 export const prerender = true
 export const getStaticPaths = () =>
@@ -16,16 +20,22 @@ if (!isLocale(localeParam) || !isLegalSlug(slugParam)) {
 const locale = localeParam
 const slug = slugParam
 const doc = legalCopy[locale][slug]
+const crumbs = [
+	{ name: navCopy[locale].home, path: "/" },
+	{ name: doc.title, path: `/legal/${slug}` },
+]
 ---
 
 <BaseLayout
 	locale={locale}
 	page={{
-		description: doc.title,
+		description: doc.description,
 		path: `/legal/${slug}`,
-		title: `${doc.title} | Beach App Guide`,
+		title: `${doc.title} | ${SITE_NAME}`,
 	}}
+	jsonLd={breadcrumbJsonLd(locale, crumbs)}
 >
+	<Breadcrumbs locale={locale} crumbs={crumbs} />
 	<h1 class="text-4xl">{doc.title}</h1>
 	{
 		doc.sections.map((section) => (

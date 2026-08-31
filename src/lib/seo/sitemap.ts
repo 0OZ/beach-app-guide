@@ -3,9 +3,11 @@ import { COMPARISON_PAIRS } from "../../catalog/pairs";
 import { LEGAL_SLUGS } from "../../content/legal";
 import { locales } from "../i18n";
 import { localizedAlternates, pageUrl } from "../paths";
+import { REVIEWED_AT } from "../site";
 
 export type SitemapEntry = {
 	alternates: Record<string, string>;
+	lastmod: string;
 	path: string;
 	url: string;
 };
@@ -29,6 +31,7 @@ export const sitemapEntries = (): SitemapEntry[] => {
 		for (const path of paths) {
 			entries.push({
 				alternates: localizedAlternates(path),
+				lastmod: REVIEWED_AT,
 				path,
 				url: pageUrl(locale, path),
 			});
@@ -54,7 +57,7 @@ export const sitemapXml = (): string => {
 						`<xhtml:link rel="alternate" hreflang="${escapeXml(language)}" href="${escapeXml(href)}" />`,
 				)
 				.join("");
-			return `<url><loc>${escapeXml(entry.url)}</loc>${links}</url>`;
+			return `<url><loc>${escapeXml(entry.url)}</loc><lastmod>${escapeXml(entry.lastmod)}</lastmod>${links}</url>`;
 		})
 		.join("");
 	return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${body}</urlset>`;

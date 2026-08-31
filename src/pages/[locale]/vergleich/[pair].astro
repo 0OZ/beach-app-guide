@@ -1,12 +1,14 @@
 ---
 import VsTable from "@/components/compare/vs-table.astro"
 import FaqList from "@/components/compare/faq-list.astro"
+import Breadcrumbs from "@/components/layout/breadcrumbs.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { COMPARISON_PAIRS, getPair, isPairSlug } from "@/catalog/pairs"
-import { pairCopy } from "@/content/copy"
+import { ONSAND_APP_URL } from "@/catalog/urls"
+import { hubCopy, navCopy, pairCopy } from "@/content/copy"
 import { vsFaqs } from "@/content/faqs"
 import { isLocale, locales } from "@/lib/i18n"
-import { vsFaqJsonLd } from "@/lib/seo/schema"
+import { breadcrumbJsonLd, vsFaqJsonLd } from "@/lib/seo/schema"
 import { defaultHomeHref, pagePath } from "@/lib/paths"
 import { appCopy } from "@/content/apps"
 
@@ -24,18 +26,31 @@ if (!isLocale(localeParam) || !isPairSlug(pairParam)) {
 const locale = localeParam
 const pair = getPair(pairParam)
 const copy = pairCopy[locale][pair.slug]
+const pick = hubCopy[locale]
 const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questions"
 const faqs = vsFaqs[pair.slug][locale]
+const crumbs = [
+	{ name: navCopy[locale].home, path: "/" },
+	{ name: copy.h1, path: `/vergleich/${pair.slug}` },
+]
 ---
 
 <BaseLayout
 	locale={locale}
 	page={{ description: copy.description, path: `/vergleich/${pair.slug}`, title: copy.title }}
-	jsonLd={vsFaqJsonLd(pair.slug, locale)}
+	jsonLd={[breadcrumbJsonLd(locale, crumbs), vsFaqJsonLd(pair.slug, locale)]}
 >
+	<Breadcrumbs locale={locale} crumbs={crumbs} />
 	<h1 class="text-4xl">{copy.h1}</h1>
 	<p class="mt-4 max-w-2xl text-lg text-muted">{copy.intro}</p>
 	<p class="mt-6 font-serif text-xl">{copy.verdict}</p>
+	<a
+		class="onsand-pick mt-4 inline-block bg-accent px-5 py-3 text-card no-underline"
+		href={ONSAND_APP_URL}
+		rel="noopener"
+	>
+		{pick.pickCta}
+	</a>
 	<section class="mt-10">
 		<VsTable left={pair.left} locale={locale} right={pair.right} />
 	</section>

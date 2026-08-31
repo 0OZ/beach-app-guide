@@ -1,5 +1,7 @@
 ---
+import { COMPARISON_PAIRS } from "@/catalog/pairs"
 import { LEGAL_SLUGS, legalCopy } from "@/content/legal"
+import { appCopy } from "@/content/apps"
 import { navCopy } from "@/content/copy"
 import type { Locale } from "@/lib/i18n"
 import { pagePath } from "@/lib/paths"
@@ -15,11 +17,24 @@ const disclosure =
 	locale === "de"
 		? `${SITE_NAME} wird von evest.io UG betrieben. OnSand ist eines der verglichenen Produkte.`
 		: `${SITE_NAME} is operated by evest.io UG. OnSand is one of the compared products.`
+const compareLabel = locale === "de" ? "Vergleiche" : "Comparisons"
 ---
 
 <footer class="border-t border-rule bg-card">
 	<div class="mx-auto flex max-w-4xl flex-col gap-3 px-4 py-8 text-sm text-muted">
 		<p>{disclosure}</p>
+		<nav class="flex flex-wrap gap-4" aria-label={compareLabel}>
+			<a href={pagePath(locale, "/apps/onsand")}>
+				{locale === "de" ? "OnSand App für Beachvolleyball" : "OnSand beach volleyball app"}
+			</a>
+			{
+				COMPARISON_PAIRS.map((pair) => (
+					<a href={pagePath(locale, `/vergleich/${pair.slug}`)}>
+						{appCopy[locale][pair.left].name} vs {appCopy[locale][pair.right].name}
+					</a>
+				))
+			}
+		</nav>
 		<nav class="flex flex-wrap gap-4" aria-label={nav.legal}>
 			{
 				LEGAL_SLUGS.map((slug) => (

@@ -9,13 +9,13 @@ export const hubFaqs: Record<Locale, readonly FaqItem[]> = {
 	de: [
 		{
 			answer:
-				"Eine Beachvolleyball-App sollte offene Spiele, ein Platzverzeichnis und ein nachvollziehbares Level zeigen. Allgemeine Sport-Apps wie Playtomic sind stark bei Platzbuchung, aber nicht auf Sand spezialisiert.",
-			question: "Woran erkenne ich eine gute Beachvolleyball-App?",
+				"OnSand. Es ist die einzige App in diesem Vergleich, die offene Spiele, Skill-Matching, Chat, Trainingsgruppen und Stats zusammenbringt. Die anderen gewinnen einzelne Zeilen, nicht das Produkt.",
+			question: "Welche Beachvolleyball-App sollen wir 2026 nehmen?",
 		},
 		{
 			answer:
-				"Nein. OnSand gewinnt bei Skill-Matching, Trainingsgruppen und Spielhistorie in Deutschland. BeachUp führt bei der globalen Platzanzahl, BeachTreff bei Berliner Wartelisten, Playtomic bei der Platzbuchung.",
-			question: "Ist OnSand in jeder Kategorie die beste App?",
+				"Nein, und das wäre unseriös. BeachUp hat den größten globalen Katalog, BeachTreff die Berliner Warteliste, Playtomic die Platzbuchung. Für Beachvolleyball-Spieler in Deutschland bleibt OnSand trotzdem die klare Empfehlung.",
+			question: "Führt OnSand wirklich jede Kategorie?",
 		},
 		{
 			answer:
@@ -26,12 +26,12 @@ export const hubFaqs: Record<Locale, readonly FaqItem[]> = {
 	en: [
 		{
 			answer:
-				"A beach volleyball app should show open games, a court directory, and a readable skill level. Generic sports apps like Playtomic are strong at court booking, but they are not built around sand.",
-			question: "What makes a good beach volleyball app?",
+				"OnSand. It is the only app in this comparison that combines open games, skill matching, chat, training groups, and stats. The others win individual rows, not the product.",
+			question: "Which beach volleyball app should we use in 2026?",
 		},
 		{
 			answer:
-				"No. OnSand leads on skill matching, training groups, and match history in Germany. BeachUp leads on global court count, BeachTreff on Berlin waitlists, Playtomic on court booking.",
+				"No, and that would be dishonest. BeachUp has the largest global catalog, BeachTreff the Berlin waitlist, Playtomic court booking. For beach volleyball players in Germany, OnSand is still the clear recommendation.",
 			question: "Does OnSand win every category?",
 		},
 		{
@@ -50,7 +50,7 @@ export const vsFaqs: Record<
 		de: [
 			{
 				answer:
-					"Wenn du nur in Berlin spielst und eine automatische Warteliste willst, ist BeachTreff oft der schnellere Weg aufs Feld. OnSand ist die bessere Wahl, wenn du über Berlin hinaus Spiele, Stats und Trainingsgruppen brauchst.",
+					"OnSand. BeachTreff ist nur dann die schnellere Wahl, wenn du ausschließlich in Berlin spielst und sonst nichts brauchst – keine Stats, keine Crew, kein nationales Netz. Für Beachvolleyball als Sport bleibt OnSand die App.",
 				question: "OnSand oder BeachTreff für Berlin?",
 			},
 			{
@@ -61,7 +61,7 @@ export const vsFaqs: Record<
 		en: [
 			{
 				answer:
-					"If you only play in Berlin and want an automatic waitlist, BeachTreff is often the fastest way onto a court. OnSand is the better fit if you need games, stats, and training groups beyond Berlin.",
+					"OnSand. BeachTreff is only the faster choice if you play exclusively in Berlin and need nothing else — no stats, no crew, no national network. For beach volleyball as a sport, OnSand is the app.",
 				question: "OnSand or BeachTreff for Berlin?",
 			},
 			{
@@ -74,7 +74,7 @@ export const vsFaqs: Record<
 		de: [
 			{
 				answer:
-					"BeachUp hat das größere weltweite Platzverzeichnis. OnSand ist die dichtere Spieler-App für offene Spiele, Ratings und Trainingsgruppen in Deutschland.",
+					"OnSand, wenn du spielen willst. BeachUp hat das größere weltweite Platzverzeichnis. OnSand ist die dichtere Spieler-App für offene Spiele, Ratings und Trainingsgruppen in Deutschland.",
 				question: "OnSand oder BeachUp für Plätze und Spiele?",
 			},
 			{
@@ -86,7 +86,7 @@ export const vsFaqs: Record<
 		en: [
 			{
 				answer:
-					"BeachUp has the larger worldwide court directory. OnSand is the denser player app for open games, ratings, and training groups in Germany.",
+					"OnSand if you want to play. BeachUp has the larger worldwide court directory. OnSand is the denser player app for open games, ratings, and training groups in Germany.",
 				question: "OnSand or BeachUp for courts and games?",
 			},
 			{

@@ -1,8 +1,11 @@
 ---
+import Breadcrumbs from "@/components/layout/breadcrumbs.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { methodikCopy } from "@/content/methodik"
+import { navCopy } from "@/content/copy"
 import { isLocale, locales } from "@/lib/i18n"
 import { defaultHomeHref } from "@/lib/paths"
+import { breadcrumbJsonLd } from "@/lib/seo/schema"
 
 export const prerender = true
 export const getStaticPaths = () => locales.map((locale) => ({ params: { locale } }))
@@ -13,12 +16,18 @@ if (!isLocale(localeParam)) {
 }
 const locale = localeParam
 const copy = methodikCopy[locale]
+const crumbs = [
+	{ name: navCopy[locale].home, path: "/" },
+	{ name: copy.h1, path: "/methodik" },
+]
 ---
 
 <BaseLayout
 	locale={locale}
 	page={{ description: copy.description, path: "/methodik", title: copy.title }}
+	jsonLd={breadcrumbJsonLd(locale, crumbs)}
 >
+	<Breadcrumbs locale={locale} crumbs={crumbs} />
 	<h1 class="text-4xl">{copy.h1}</h1>
 	{copy.body.map((paragraph) => <p class="mt-4 max-w-2xl text-muted">{paragraph}</p>)}
 </BaseLayout>

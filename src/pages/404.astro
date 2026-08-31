@@ -1,4 +1,17 @@
 ---
+import { defaultHomeHref } from "@/lib/paths"
+import { SITE_NAME } from "@/lib/site"
 ---
 
-<h1>Not found</h1>
+<html lang="de">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<title>Not found | {SITE_NAME}</title>
+	</head>
+	<body>
+		<h1>Not found</h1>
+		<p><a href={defaultHomeHref}>{SITE_NAME}</a></p>
+	</body>
+</html>

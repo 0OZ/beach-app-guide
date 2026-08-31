@@ -1,6 +1,6 @@
 import { type Locale, OPEN_GRAPH_LOCALES } from "../i18n";
 import { localizedAlternates, pageUrl } from "../paths";
-import { SITE_NAME } from "../site";
+import { REVIEWED_AT, SITE_NAME } from "../site";
 
 export type PageMetadata = {
 	description: string;
@@ -10,9 +10,11 @@ export type PageMetadata = {
 
 export type ResolvedMetadata = {
 	alternates: Record<string, string>;
+	author: string;
 	canonical: string;
 	description: string;
 	locale: string;
+	modifiedTime: string;
 	ogAlternateLocale: string;
 	robots: string;
 	siteName: string;
@@ -23,9 +25,11 @@ export const resolveMetadata = (locale: Locale, page: PageMetadata): ResolvedMet
 	const openGraph = OPEN_GRAPH_LOCALES[locale];
 	return {
 		alternates: localizedAlternates(page.path),
+		author: "evest.io UG (haftungsbeschränkt)",
 		canonical: pageUrl(locale, page.path),
 		description: page.description,
 		locale: openGraph.locale,
+		modifiedTime: REVIEWED_AT,
 		ogAlternateLocale: openGraph.alternate,
 		robots: "index,follow",
 		siteName: SITE_NAME,

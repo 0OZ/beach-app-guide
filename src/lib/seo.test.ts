@@ -1,11 +1,22 @@
 import { describe, expect, test } from "bun:test";
 import { APP_IDS } from "../catalog/apps";
 import { COMPARISON_PAIRS } from "../catalog/pairs";
+import { appCopy } from "../content/apps";
+import { hubCopy, pairCopy } from "../content/copy";
+import { LEGAL_SLUGS, legalCopy } from "../content/legal";
+import { methodikCopy } from "../content/methodik";
 import { locales } from "./i18n";
 import { robotsTxt } from "./seo/robots";
-import { hubFaqJsonLd, profileSoftwareJsonLd, vsFaqJsonLd } from "./seo/schema";
-import { sitemapEntries } from "./seo/sitemap";
-import { SITE_URL } from "./site";
+import {
+	breadcrumbJsonLd,
+	hubFaqJsonLd,
+	hubItemListJsonLd,
+	profileSoftwareJsonLd,
+	vsFaqJsonLd,
+	websiteJsonLd,
+} from "./seo/schema";
+import { sitemapEntries, sitemapXml } from "./seo/sitemap";
+import { REVIEWED_AT, SITE_NAME, SITE_URL } from "./site";
 
 describe("sitemap", () => {
 	test("lists hub, methodik, legal, every app, and both pairs per locale", () => {
@@ -33,6 +44,13 @@ describe("sitemap", () => {
 			"x-default": `${SITE_URL}/de`,
 		});
 	});
+
+	test("every URL carries a lastmod date", () => {
+		const entries = sitemapEntries();
+		expect(entries.length).toBeGreaterThan(0);
+		expect(entries.every((entry) => entry.lastmod === REVIEWED_AT)).toBe(true);
+		expect(sitemapXml()).toContain(`<lastmod>${REVIEWED_AT}</lastmod>`);
+	});
 });
 
 describe("robots", () => {
@@ -51,9 +69,68 @@ describe("json-ld", () => {
 		const schema = profileSoftwareJsonLd("onsand", "de");
 		expect(schema["@type"]).toBe("SoftwareApplication");
 		expect(schema.url).toBe("https://onsand.app");
+		expect(schema.description).toBe(appCopy.de.onsand.summary);
+	});
+
+	test("hub ItemList points at first-party profile URLs", () => {
+		const schema = hubItemListJsonLd("de");
+		const items = schema.itemListElement as readonly { url: string }[];
+		expect(items[0]?.url).toBe(`${SITE_URL}/de/apps/onsand`);
+		expect(items.every((item) => item.url.startsWith(`${SITE_URL}/`))).toBe(true);
+	});
+
+	test("hub includes WebSite schema for this origin", () => {
+		const schema = websiteJsonLd("de");
+		expect(schema["@type"]).toBe("WebSite");
+		expect(schema.url).toBe(SITE_URL);
+		expect(schema.name).toBe(SITE_NAME);
+	});
+
+	test("breadcrumbs list Home then the current page", () => {
+		const schema = breadcrumbJsonLd("de", [
+			{ name: "Übersicht", path: "/" },
+			{ name: "OnSand", path: "/apps/onsand" },
+		]);
+		const items = schema.itemListElement as readonly { item: string; position: number }[];
+		expect(schema["@type"]).toBe("BreadcrumbList");
+		expect(items[0]?.item).toBe(`${SITE_URL}/de`);
+		expect(items[1]?.item).toBe(`${SITE_URL}/de/apps/onsand`);
+		expect(items[1]?.position).toBe(2);
 	});
 
 	test("vs pages emit FAQPage schema", () => {
 		expect(vsFaqJsonLd("onsand-vs-beachup", "en")["@type"]).toBe("FAQPage");
+	});
+});
+
+describe("document titles", () => {
+	const moneyTitles = (): string[] => {
+		const titles: string[] = [];
+		for (const locale of locales) {
+			titles.push(hubCopy[locale].title);
+			titles.push(methodikCopy[locale].title);
+			for (const id of APP_IDS) {
+				titles.push(appCopy[locale][id].pageTitle);
+			}
+			for (const pair of COMPARISON_PAIRS) {
+				titles.push(pairCopy[locale][pair.slug].title);
+			}
+			for (const slug of LEGAL_SLUGS) {
+				titles.push(`${legalCopy[locale][slug].title} | ${SITE_NAME}`);
+			}
+		}
+		return titles;
+	};
+
+	test("every locale page has a unique title", () => {
+		const titles = moneyTitles();
+		expect(new Set(titles).size).toBe(titles.length);
+	});
+
+	test("German hub and OnSand profile target distinct Beachvolleyball intents", () => {
+		expect(hubCopy.de.title).toContain("Beste Beachvolleyball-App");
+		expect(appCopy.de.onsand.pageTitle).toContain("OnSand");
+		expect(appCopy.de.onsand.pageTitle).toContain("Beachvolleyball");
+		expect(hubCopy.de.title).not.toBe(appCopy.de.onsand.pageTitle);
 	});
 });

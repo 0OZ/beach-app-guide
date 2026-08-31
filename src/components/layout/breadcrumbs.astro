@@ -1,0 +1,30 @@
+---
+import type { Breadcrumb } from "@/lib/seo/schema"
+import type { Locale } from "@/lib/i18n"
+import { pagePath } from "@/lib/paths"
+
+type Props = {
+	crumbs: readonly Breadcrumb[]
+	locale: Locale
+}
+
+const { crumbs, locale } = Astro.props
+const label = locale === "de" ? "Brotkrumen" : "Breadcrumb"
+---
+
+<nav aria-label={label} class="mb-6 text-sm text-muted">
+	<ol class="flex flex-wrap items-center gap-2">
+		{
+			crumbs.map((crumb, index) => (
+				<li class="flex items-center gap-2">
+					{index > 0 && <span aria-hidden="true">/</span>}
+					{index === crumbs.length - 1 ? (
+						<span aria-current="page">{crumb.name}</span>
+					) : (
+						<a href={pagePath(locale, crumb.path)}>{crumb.name}</a>
+					)}
+				</li>
+			))
+		}
+	</ol>
+</nav>

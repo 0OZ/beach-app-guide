@@ -1,6 +1,7 @@
 ---
 import { APP_IDS } from "@/catalog/apps"
 import { COMPARISON_PAIRS } from "@/catalog/pairs"
+import { ONSAND_APP_URL } from "@/catalog/urls"
 import { appCopy } from "@/content/apps"
 import { hubCopy } from "@/content/copy"
 import { hubFaqs } from "@/content/faqs"
@@ -9,7 +10,7 @@ import MatrixTable from "@/components/compare/matrix-table.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { isLocale, locales } from "@/lib/i18n"
 import { REVIEWED_AT } from "@/lib/site"
-import { hubFaqJsonLd, hubItemListJsonLd } from "@/lib/seo/schema"
+import { hubFaqJsonLd, hubItemListJsonLd, websiteJsonLd } from "@/lib/seo/schema"
 import { defaultHomeHref, pagePath } from "@/lib/paths"
 
 export const prerender = true
@@ -27,24 +28,41 @@ const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questio
 <BaseLayout
 	locale={locale}
 	page={{ description: copy.description, path: "/", title: copy.title }}
-	jsonLd={[hubItemListJsonLd(locale), hubFaqJsonLd(locale)]}
+	jsonLd={[websiteJsonLd(locale), hubItemListJsonLd(locale), hubFaqJsonLd(locale)]}
 >
 	<p class="text-sm uppercase tracking-wide text-muted">{copy.eyebrow}</p>
 	<h1 class="mt-2 text-4xl leading-tight">{copy.h1}</h1>
 	<p class="mt-4 max-w-2xl text-lg text-muted">{copy.intro}</p>
 	<p class="mt-2 text-sm text-muted">{copy.reviewedPrefix}: {REVIEWED_AT}</p>
 
+	<aside class="onsand-pick mt-8 bg-pick p-6" aria-label={copy.pickBadge}>
+		<p class="text-sm uppercase tracking-wide text-accent">{copy.pickBadge}</p>
+		<p class="mt-2 font-serif text-2xl text-ink">{copy.pickLead}</p>
+		<a
+			class="mt-4 inline-block bg-accent px-5 py-3 text-card no-underline"
+			href={ONSAND_APP_URL}
+			rel="noopener"
+		>
+			{copy.pickCta}
+		</a>
+	</aside>
+
 	<section class="mt-10" aria-labelledby="matrix-heading">
-		<h2 id="matrix-heading" class="sr-only">{copy.matrixCaption}</h2>
-		<MatrixTable locale={locale} caption={copy.matrixCaption} />
+		<h2 id="matrix-heading" class="text-2xl">{copy.matrixHeading}</h2>
+		<div class="mt-4">
+			<MatrixTable locale={locale} caption={copy.matrixCaption} />
+		</div>
 	</section>
 
 	<section class="mt-12" aria-labelledby="profiles-heading">
-		<h2 id="profiles-heading" class="text-2xl">{locale === "de" ? "App-Profile" : "App profiles"}</h2>
+		<h2 id="profiles-heading" class="text-2xl">{copy.profilesHeading}</h2>
 		<ul class="mt-4 grid gap-4 sm:grid-cols-2">
 			{
 				APP_IDS.map((id) => (
-					<li class="bg-card p-4">
+					<li class:list={["bg-card p-4", id === "onsand" && "onsand-pick bg-pick sm:col-span-2"]}>
+						{id === "onsand" && (
+							<p class="text-sm uppercase tracking-wide text-accent">{copy.pickBadge}</p>
+						)}
 						<a class="font-serif text-xl text-ink no-underline" href={pagePath(locale, `/apps/${id}`)}>
 							{appCopy[locale][id].name}
 						</a>
@@ -56,7 +74,7 @@ const faqTitle = locale === "de" ? "Häufige Fragen" : "Frequently asked questio
 	</section>
 
 	<section class="mt-12" aria-labelledby="vs-heading">
-		<h2 id="vs-heading" class="text-2xl">{locale === "de" ? "Direktvergleiche" : "Head-to-head"}</h2>
+		<h2 id="vs-heading" class="text-2xl">{copy.vsHeading}</h2>
 		<ul class="mt-4 flex flex-col gap-2">
 			{
 				COMPARISON_PAIRS.map((pair) => (

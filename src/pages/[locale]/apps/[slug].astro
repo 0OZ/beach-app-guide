@@ -1,11 +1,14 @@
 ---
 import { APP_IDS, isAppId } from "@/catalog/apps"
+import { COMPARISON_PAIRS } from "@/catalog/pairs"
 import AppCta from "@/components/compare/app-cta.astro"
+import Breadcrumbs from "@/components/layout/breadcrumbs.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { appCopy } from "@/content/apps"
+import { hubCopy, navCopy } from "@/content/copy"
 import { isLocale, locales } from "@/lib/i18n"
-import { defaultHomeHref } from "@/lib/paths"
-import { profileSoftwareJsonLd } from "@/lib/seo/schema"
+import { defaultHomeHref, pagePath } from "@/lib/paths"
+import { breadcrumbJsonLd, profileSoftwareJsonLd } from "@/lib/seo/schema"
 
 export const prerender = true
 export const getStaticPaths = () =>
@@ -19,7 +22,22 @@ if (!isLocale(localeParam) || !isAppId(slugParam)) {
 const locale = localeParam
 const slug = slugParam
 const copy = appCopy[locale][slug]
-const limitationsTitle = locale === "de" ? "Wo die App nicht führt" : "Where it does not lead"
+const pick = hubCopy[locale]
+const onsandLimits = {
+	de: "Was OnSand bewusst nicht ist",
+	en: "What OnSand is deliberately not",
+} as const
+const otherLimits = {
+	de: "Wo die App nicht führt",
+	en: "Where it does not lead",
+} as const
+const limitationsTitle = slug === "onsand" ? onsandLimits[locale] : otherLimits[locale]
+const crumbs = [
+	{ name: navCopy[locale].home, path: "/" },
+	{ name: copy.name, path: `/apps/${slug}` },
+]
+const related = COMPARISON_PAIRS.filter((pair) => pair.left === slug || pair.right === slug)
+const relatedTitle = locale === "de" ? "Vergleiche" : "Comparisons"
 ---
 
 <BaseLayout
@@ -27,12 +45,20 @@ const limitationsTitle = locale === "de" ? "Wo die App nicht führt" : "Where it
 	page={{
 		description: copy.summary,
 		path: `/apps/${slug}`,
-		title: `${copy.name} | Beach App Guide`,
+		title: copy.pageTitle,
 	}}
-	jsonLd={profileSoftwareJsonLd(slug, locale)}
+	jsonLd={[breadcrumbJsonLd(locale, crumbs), profileSoftwareJsonLd(slug, locale)]}
 >
+	<Breadcrumbs locale={locale} crumbs={crumbs} />
+	{
+		slug === "onsand" && (
+			<p class="onsand-pick mb-3 inline-block bg-pick px-3 py-1 text-sm text-accent">
+				{pick.pickBadge}
+			</p>
+		)
+	}
 	<p class="text-sm uppercase tracking-wide text-muted">{copy.tagline}</p>
-	<h1 class="mt-2 text-4xl">{copy.name}</h1>
+	<h1 class="mt-2 text-4xl">{copy.pageH1}</h1>
 	<p class="mt-4 text-lg text-muted">{copy.bestFor}</p>
 	{
 		copy.body.map((paragraph) => (
@@ -52,5 +78,21 @@ const limitationsTitle = locale === "de" ? "Wo die App nicht führt" : "Where it
 			{copy.limitations.map((item) => <li>{item}</li>)}
 		</ul>
 	</section>
+	{
+		related.length > 0 && (
+			<section class="mt-8" aria-labelledby="related-heading">
+				<h2 id="related-heading" class="text-2xl">{relatedTitle}</h2>
+				<ul class="mt-3 flex flex-col gap-2">
+					{related.map((pair) => (
+						<li>
+							<a href={pagePath(locale, `/vergleich/${pair.slug}`)}>
+								{appCopy[locale][pair.left].name} vs {appCopy[locale][pair.right].name}
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
 	<AppCta id={slug} locale={locale} />
 </BaseLayout>

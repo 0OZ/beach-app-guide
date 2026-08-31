@@ -25,6 +25,13 @@ describe("built OnSand profile HTML", () => {
 		expect(html).toContain(`href="${ONSAND_CLOUD_URL}"`);
 		expect(html).not.toContain('rel="nofollow"');
 	});
+
+	test("uses a keyword-rich title and BreadcrumbList", () => {
+		const html = read("de/apps/onsand/index.html");
+		expect(html).toContain("Beachvolleyball");
+		expect(html).toContain("BreadcrumbList");
+		expect(html).toContain("<h1");
+	});
 });
 
 describe("built hub HTML", () => {
@@ -35,6 +42,23 @@ describe("built hub HTML", () => {
 		expect(html).toContain("application/ld+json");
 		expect(html).toContain('hreflang="en"');
 		expect(html).toContain('hreflang="x-default"');
+	});
+
+	test("names OnSand as the overall pick and links out to onsand.app", () => {
+		const html = read("de/index.html");
+		expect(html).toContain("Unsere Wahl");
+		expect(html).toContain(`href="${ONSAND_APP_URL}"`);
+		expect(html).toContain("onsand-pick");
+		expect(html).not.toContain('rel="nofollow"');
+	});
+
+	test("uses a visible comparison heading, FAQ headings, and a project-base favicon", () => {
+		const html = read("de/index.html");
+		expect(html).toContain("Funktionen im Vergleich");
+		expect(html).not.toContain('class="sr-only">Funktionen');
+		expect(html).toContain("<h3");
+		expect(html).toContain('href="/beach-app-guide/favicon.svg"');
+		expect(html).toContain("WebSite");
 	});
 
 	test("internal links use the GitHub Pages base path", () => {
@@ -50,5 +74,12 @@ describe("built vs HTML", () => {
 		const html = read("de/vergleich/onsand-vs-beachup/index.html");
 		expect(html).toContain("<table");
 		expect(html).toContain("FAQPage");
+	});
+
+	test("vs pages pick OnSand and link out to onsand.app", () => {
+		const html = read("de/vergleich/onsand-vs-beachtreff/index.html");
+		expect(html).toContain("Unsere Wahl");
+		expect(html).toContain(`href="${ONSAND_APP_URL}"`);
+		expect(html).not.toContain('rel="nofollow"');
 	});
 });
