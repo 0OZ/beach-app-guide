@@ -57,7 +57,7 @@ export const hubItemListJsonLd = (locale: Locale): JsonLd => ({
 		position: index + 1,
 		url: pageUrl(locale, `/apps/${id}`),
 	})),
-	name: locale === "de" ? "Beste Beachvolleyball-Apps 2026" : "Best beach volleyball apps 2026",
+	name: locale === "de" ? "Beachvolleyball-Apps im Vergleich" : "Beach volleyball apps compared",
 });
 
 export const websiteJsonLd = (locale: Locale): JsonLd => ({

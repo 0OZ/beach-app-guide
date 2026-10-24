@@ -9,6 +9,7 @@ import type { JsonLd as JsonLdValue } from "@/lib/seo/schema"
 import { resolveMetadata, type PageMetadata } from "@/lib/seo/metadata"
 import { SITE_BASE } from "@/lib/site"
 import "@/styles/global.css"
+import "@/styles/guide.css"
 
 type Props = {
 	jsonLd?: JsonLdValue | readonly JsonLdValue[]
@@ -51,9 +52,7 @@ const faviconHref = `${SITE_BASE}/favicon.svg`
 		<meta name="twitter:title" content={resolved.title} />
 		<meta name="twitter:description" content={resolved.description} />
 		<link rel="icon" href={faviconHref} type="image/svg+xml" />
-		<Font cssVariable="--font-bricolage" preload />
-		<Font cssVariable="--font-source-serif" preload />
-		<Font cssVariable="--font-plex-mono" />
+		<Font cssVariable="--font-guide" preload />
 		{blocks.map((block) => <JsonLd data={block} />)}
 	</head>
 	<body class="bg-canvas text-ink antialiased">
@@ -61,7 +60,7 @@ const faviconHref = `${SITE_BASE}/favicon.svg`
 			{nav.skipToContent}
 		</a>
 		<Header locale={locale} path={page.path} />
-		<main id="content" class="mx-auto max-w-4xl px-5 py-12 sm:py-16">
+		<main id="content" class="site-shell page-main">
 			<slot />
 		</main>
 		<Footer locale={locale} />

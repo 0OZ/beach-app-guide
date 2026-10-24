@@ -1,46 +1,24 @@
 ---
-import { COMPARISON_PAIRS } from "@/catalog/pairs"
 import { LEGAL_SLUGS, legalCopy } from "@/content/legal"
-import { appCopy } from "@/content/apps"
-import { navCopy } from "@/content/copy"
+import { hubCopy, navCopy } from "@/content/copy"
 import type { Locale } from "@/lib/i18n"
 import { pagePath } from "@/lib/paths"
 import { SITE_NAME } from "@/lib/site"
 
-type Props = {
-	locale: Locale
-}
-
+type Props = { locale: Locale }
 const { locale } = Astro.props
 const nav = navCopy[locale]
-const disclosure =
-	locale === "de"
-		? `${SITE_NAME} wird von evest.io UG betrieben. OnSand ist eines der verglichenen Produkte.`
-		: `${SITE_NAME} is operated by evest.io UG. OnSand is one of the compared products.`
-const compareLabel = locale === "de" ? "Vergleiche" : "Comparisons"
 ---
 
-<footer class="border-t-2 border-ink bg-card">
-	<div class="mx-auto flex max-w-4xl flex-col gap-4 px-5 py-10 text-sm text-muted">
-		<p>{disclosure}</p>
-		<nav class="flex flex-wrap gap-4" aria-label={compareLabel}>
-			<a href={pagePath(locale, "/apps/onsand")}>
-				{locale === "de" ? "OnSand App für Beachvolleyball" : "OnSand beach volleyball app"}
-			</a>
-			{
-				COMPARISON_PAIRS.map((pair) => (
-					<a href={pagePath(locale, `/vergleich/${pair.slug}`)}>
-						{appCopy[locale][pair.left].name} vs {appCopy[locale][pair.right].name}
-					</a>
-				))
-			}
-		</nav>
-		<nav class="flex flex-wrap gap-4" aria-label={nav.legal}>
-			{
-				LEGAL_SLUGS.map((slug) => (
-					<a href={pagePath(locale, `/legal/${slug}`)}>{legalCopy[locale][slug].title}</a>
-				))
-			}
+<footer class="site-footer">
+	<div class="site-shell footer-inner">
+		<div>
+			<span class="font-semibold">{SITE_NAME}</span>
+			<p class="mt-2">{hubCopy[locale].disclosure}</p>
+		</div>
+		<nav class="footer-links" aria-label={nav.legal}>
+			<a href={pagePath(locale, "/methodik")}>{nav.methodology}</a>
+			{LEGAL_SLUGS.map((slug) => <a href={pagePath(locale, `/legal/${slug}`)}>{legalCopy[locale][slug].title}</a>)}
 		</nav>
 	</div>
 </footer>

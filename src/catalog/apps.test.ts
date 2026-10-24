@@ -1,11 +1,11 @@
 import { describe, expect, test } from "bun:test";
 import { APP_IDS, apps, getApp } from "./apps";
-import { DIMENSION_LEADERS, FEATURE_KEYS } from "./matrix";
+import { FEATURE_KEYS } from "./matrix";
 import { ONSAND_APP_URL, ONSAND_CLOUD_URL } from "./urls";
 
 describe("app catalog", () => {
 	test("lists the four v1 apps", () => {
-		expect(APP_IDS).toEqual(["onsand", "beachup", "beachtreff", "playtomic"]);
+		expect(APP_IDS).toEqual(["beachtreff", "beachup", "onsand", "playtomic"]);
 	});
 
 	test("OnSand official site is onsand.app", () => {
@@ -20,28 +20,35 @@ describe("app catalog", () => {
 		}
 	});
 
-	test("OnSand is not the leader on every dimension", () => {
-		const leaders = FEATURE_KEYS.map((key) => DIMENSION_LEADERS[key]);
-		expect(leaders.some((leader) => leader !== "onsand")).toBe(true);
-		expect(new Set(leaders).size).toBeGreaterThan(1);
+	test("every documented or external feature has a traceable HTTPS source", () => {
+		for (const id of APP_IDS) {
+			for (const key of FEATURE_KEYS) {
+				const evidence = getApp(id).features[key];
+				if (evidence.status !== "unverified") {
+					expect(new URL(evidence.source).protocol).toBe("https:");
+				}
+			}
+		}
 	});
 
-	test("BeachTreff is Berlin-only and Playtomic is racket-first", () => {
+	test("catalog distinguishes geographic focus from sport focus", () => {
 		expect(getApp("beachtreff").geography).toBe("berlin");
 		expect(getApp("playtomic").sportFocus).toBe("racket");
 		expect(getApp("beachup").geography).toBe("global");
 		expect(getApp("onsand").sportFocus).toBe("beach");
 	});
 
-	test("freeForPlayers row mirrors the price field for every app", () => {
-		for (const id of APP_IDS) {
-			const app = getApp(id);
-			expect(app.features.freeForPlayers).toBe(app.price === "free");
+	test("a free entry tier does not imply every feature is free", () => {
+		for (const id of ["beachup", "playtomic"] as const) {
+			expect(getApp(id).price).toBe("freemium");
+			expect(getApp(id).features.freeForPlayers.status).toBe("documented");
 		}
 	});
 
-	test("OnSand leads the free-for-players dimension", () => {
-		expect(DIMENSION_LEADERS.freeForPlayers).toBe("onsand");
+	test("external booking is distinct from native checkout and unknown features", () => {
+		expect(getApp("onsand").features.courtBooking.status).toBe("external");
+		expect(getApp("playtomic").features.courtBooking.status).toBe("documented");
+		expect(getApp("beachup").features.courtBooking.status).toBe("unverified");
 	});
 
 	test("OnSand club software URL is onsand.cloud", () => {

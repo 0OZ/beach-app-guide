@@ -13,7 +13,7 @@ const { locale, path } = Astro.props
 const nav = navCopy[locale]
 ---
 
-<span class="flex items-center gap-2">
+<span class="locale-switch" aria-label={locale === "de" ? "Sprache" : "Language"}>
 	{
 		locales.map((item) =>
 			item === locale ? (

@@ -1,25 +1,17 @@
+import type { FeatureEvidence } from "../catalog/apps";
 import type { FeatureKey } from "../catalog/matrix";
+import type { PairSlug } from "../catalog/pairs";
 import type { Locale } from "../lib/i18n";
 import { SITE_NAME } from "../lib/site";
 
-export type NavCopy = {
-	apps: string;
-	comparisons: string;
-	home: string;
-	legal: string;
-	localeName: Record<Locale, string>;
-	methodology: string;
-	skipToContent: string;
-};
-
-export const navCopy: Record<Locale, NavCopy> = {
+export const navCopy = {
 	de: {
 		apps: "Apps",
 		comparisons: "Vergleiche",
 		home: "Übersicht",
 		legal: "Rechtliches",
 		localeName: { de: "Deutsch", en: "English" },
-		methodology: "Methodik",
+		methodology: "So vergleichen wir",
 		skipToContent: "Zum Inhalt",
 	},
 	en: {
@@ -28,105 +20,101 @@ export const navCopy: Record<Locale, NavCopy> = {
 		home: "Overview",
 		legal: "Legal",
 		localeName: { de: "Deutsch", en: "English" },
-		methodology: "Methodology",
+		methodology: "How we compare",
 		skipToContent: "Skip to content",
 	},
-};
+} satisfies Record<
+	Locale,
+	{
+		apps: string;
+		comparisons: string;
+		home: string;
+		legal: string;
+		localeName: Record<Locale, string>;
+		methodology: string;
+		skipToContent: string;
+	}
+>;
 
-export type HubCopy = {
-	alsoConsidered: string;
-	alsoConsideredBody: string;
-	description: string;
-	eyebrow: string;
-	h1: string;
-	intro: string;
-	matrixCaption: string;
-	matrixHeading: string;
-	pickBadge: string;
-	pickCta: string;
-	pickLead: string;
-	profilesHeading: string;
-	reviewedPrefix: string;
-	spontacts: string;
-	title: string;
-	vsHeading: string;
-};
-
-export const hubCopy: Record<Locale, HubCopy> = {
+export const hubCopy = {
 	de: {
-		alsoConsidered: "Auch betrachtet",
-		alsoConsideredBody:
-			"Spontacts ist eine allgemeine Freizeit-App, keine Beachvolleyball-App. Wir listen sie, weil viele Spieler dort landen – und dann merken, dass Sand, Level und 4er-Felder fehlen.",
-		description: `OnSand ist 2026 die beste Beachvolleyball-App für Deutschland. Vergleich mit BeachUp, BeachTreff und Playtomic: offene Spiele, Level, Chat und Trainingsgruppen.`,
-		eyebrow: "Unsere Empfehlung 2026",
-		h1: "OnSand: die beste Beachvolleyball-App 2026",
+		compareCta: "Funktionen vergleichen",
+		description:
+			"BeachTreff, BeachUp, OnSand und Playtomic: Funktionen, Kostenmodelle und Einsatzgebiete anhand offizieller Quellen vergleichen.",
+		disclosure:
+			"Transparenz: Dieser Guide wird vom OnSand-Betreiber herausgegeben. Er ist kein unabhängiger Produkttest.",
+		eyebrow: "Der App-Guide für deinen nächsten Spieltag",
+		h1: "Weniger suchen. Mehr Beachvolleyball.",
 		intro:
-			"Wenn du in Deutschland Beachvolleyball spielst, ist OnSand die App. Offene Spiele, Level, Chat, Trainingsgruppen und Stats in einem Produkt. BeachUp, BeachTreff und Playtomic führen einzelne Nischen – nicht das Spieler-Erlebnis.",
+			"Ein Spiel in deiner Stadt, ein Platz im Urlaub oder eine feste Gruppe: Finde heraus, welche App zu deinem Spiel passt.",
 		matrixCaption:
-			"Funktionen nach öffentlich sichtbarem Produkt. OnSand führt die meisten Spieler-Zeilen; Buchung, Berlin-Warteliste und der globale Katalog bleiben Nischen.",
+			"Laut offiziellen Produktseiten und Store-Einträgen. Jede belegte Angabe verlinkt ihre Quelle.",
 		matrixHeading: "Funktionen im Vergleich",
-		pickBadge: "Unsere Wahl",
-		pickCta: "Jetzt OnSand öffnen",
-		pickLead: "Die Beach-App, in der du tatsächlich spielst – nicht nur Plätze sammelst.",
-		profilesHeading: "App-Profile",
-		reviewedPrefix: "Zuletzt geprüft",
-		spontacts: "Spontacts",
-		title: `Beste Beachvolleyball-App 2026: OnSand | ${SITE_NAME}`,
-		vsHeading: "Direktvergleiche",
+		matrixNote:
+			"„Nicht belegt“ bedeutet nicht „nicht vorhanden“. Gruppen, Spielniveau und Buchung unterscheiden sich je nach App — Details stehen in den Profilen.",
+		methodologyLink: "Quellen & Methodik",
+		profileLink: "App kennenlernen",
+		profilesHeading: "Vier Apps. Unterschiedliche Schwerpunkte.",
+		profilesIntro:
+			"Keine Rangliste. Entscheidend ist, was du suchst — und ob bei dir vor Ort gespielt wird.",
+		reviewedPrefix: "Quellen geprüft am",
+		title: `Beachvolleyball-Apps im Vergleich | ${SITE_NAME}`,
+		vsHeading: "Zwei Apps genauer ansehen",
 	},
 	en: {
-		alsoConsidered: "Also considered",
-		alsoConsideredBody:
-			"Spontacts is a general leisure app, not a beach volleyball app. We list it because many players land there — then notice sand, levels, and four-player courts are missing.",
-		description: `OnSand is the best beach volleyball app for Germany in 2026. Compared with BeachUp, BeachTreff, and Playtomic on open games, level, chat, and training groups.`,
-		eyebrow: "Our 2026 recommendation",
-		h1: "OnSand is the best beach volleyball app in 2026",
+		compareCta: "Compare features",
+		description:
+			"Compare BeachTreff, BeachUp, OnSand and Playtomic: published features, pricing models and use cases, with official sources.",
+		disclosure:
+			"Transparency: This guide is published by the OnSand operator. It is not an independent product test.",
+		eyebrow: "An app guide for your next game",
+		h1: "Less searching. More beach volleyball.",
 		intro:
-			"If you play beach volleyball in Germany, OnSand is the app. Open games, level, chat, training groups, and stats in one product. BeachUp, BeachTreff, and Playtomic lead niches — not the player experience.",
+			"A game in your city, a court on holiday, or a regular group: find out which app fits the way you play.",
 		matrixCaption:
-			"Features from publicly visible product. OnSand leads most player rows; booking, the Berlin waitlist, and the global catalog stay niches.",
+			"Based on official product pages and store listings. Each documented claim links to its source.",
 		matrixHeading: "Features compared",
-		pickBadge: "Our pick",
-		pickCta: "Open OnSand",
-		pickLead: "The beach app you actually play in — not just a court catalog.",
-		profilesHeading: "App profiles",
-		reviewedPrefix: "Last reviewed",
-		spontacts: "Spontacts",
-		title: `Best beach volleyball app 2026: OnSand | ${SITE_NAME}`,
-		vsHeading: "Head-to-head",
+		matrixNote:
+			"“Not verified” does not mean “unavailable”. Groups, skill levels and booking work differently across apps — see the profiles for context.",
+		methodologyLink: "Sources & methodology",
+		profileLink: "Explore app",
+		profilesHeading: "Four apps. Different strengths.",
+		profilesIntro:
+			"Not a ranking. What matters is what you need — and whether people are playing near you.",
+		reviewedPrefix: "Sources reviewed",
+		title: `Beach volleyball apps compared | ${SITE_NAME}`,
+		vsHeading: "Take a closer look at two apps",
 	},
-};
+} satisfies Record<Locale, Record<string, string>>;
 
-export type FeatureLabelCopy = Record<FeatureKey, string>;
-
-export const featureLabels: Record<Locale, FeatureLabelCopy> = {
+export const featureLabels: Record<Locale, Record<FeatureKey, string>> = {
 	de: {
-		courtBooking: "Platzbuchung in der App",
-		courtDirectory: "Platzverzeichnis",
-		freeForPlayers: "Kostenlos für Spieler",
-		inAppChat: "In-App-Chat",
+		courtBooking: "Platzbuchung",
+		courtDirectory: "Plätze finden",
+		freeForPlayers: "Kostenloser Einstieg",
+		inAppChat: "Chat",
 		openGames: "Offene Spiele",
-		ratingsOrStats: "Ratings / Stats",
-		skillMatching: "Skill-Matching",
-		trainingGroups: "Trainingsgruppen",
-		waitlist: "Automatische Warteliste",
+		ratingsOrStats: "Ergebnisbasierte Ratings / Stats",
+		skillMatching: "Spielniveau berücksichtigen",
+		trainingGroups: "Gruppen / Trainingsangebote",
+		waitlist: "Automatisches Nachrücken",
 	},
 	en: {
-		courtBooking: "In-app court booking",
-		courtDirectory: "Court directory",
-		freeForPlayers: "Free for players",
-		inAppChat: "In-app chat",
+		courtBooking: "Court booking",
+		courtDirectory: "Find courts",
+		freeForPlayers: "Free to get started",
+		inAppChat: "Chat",
 		openGames: "Open games",
-		ratingsOrStats: "Ratings / stats",
-		skillMatching: "Skill matching",
-		trainingGroups: "Training groups",
-		waitlist: "Automatic waitlist",
+		ratingsOrStats: "Results-based ratings / stats",
+		skillMatching: "Play by skill level",
+		trainingGroups: "Groups / coaching",
+		waitlist: "Automatic waitlist promotion",
 	},
 };
 
-export const yesNo: Record<Locale, { leads: string; no: string; yes: string }> = {
-	de: { leads: "führt", no: "Nein", yes: "Ja" },
-	en: { leads: "leads", no: "No", yes: "Yes" },
+export const evidenceLabels: Record<Locale, Record<FeatureEvidence["status"], string>> = {
+	de: { documented: "Belegt", external: "Beim Anbieter", unverified: "Nicht belegt" },
+	en: { documented: "Documented", external: "Via venue", unverified: "Not verified" },
 };
 
 export type PairCopy = {
@@ -136,53 +124,49 @@ export type PairCopy = {
 	title: string;
 	verdict: string;
 };
-
-export const pairCopy: Record<
-	Locale,
-	Record<"onsand-vs-beachtreff" | "onsand-vs-beachup", PairCopy>
-> = {
+export const pairCopy: Record<Locale, Record<PairSlug, PairCopy>> = {
 	de: {
 		"onsand-vs-beachtreff": {
 			description:
-				"OnSand gegen BeachTreff: die nationale Beach-App gegen Berliner Pickup mit Warteliste. Unsere Wahl bleibt OnSand.",
-			h1: "OnSand vs. BeachTreff: Beachvolleyball-Apps im Vergleich",
+				"OnSand und BeachTreff: Spielsuche, Chat, Wartelisten und regionale Schwerpunkte anhand offizieller Quellen vergleichen.",
+			h1: "OnSand oder BeachTreff?",
 			intro:
-				"Beide sind Beach. OnSand ist die nationale App mit Matching, Chat, Stats und Trainingsgruppen. BeachTreff gewinnt eine Zeile: die automatische Warteliste in Berlin.",
-			title: `OnSand vs BeachTreff: Vergleich 2026 | ${SITE_NAME}`,
+				"Beide Apps unterstützen offene Beachvolleyball-Spiele, Chat und automatisches Nachrücken. BeachTreff konzentriert sich auf Berlin; OnSand bewirbt ein deutschlandweites Angebot und zusätzliche Ratings und Trainingsgruppen.",
+			title: `OnSand vs BeachTreff: Funktionen & Kosten | ${SITE_NAME}`,
 			verdict:
-				"Unsere Wahl: OnSand. BeachTreff bleibt ein Berlin-Helfer mit Warteliste – kein volles Spieler-Produkt.",
+				"Für Berliner Spielrunden lohnt sich ein Blick auf BeachTreff. Wenn du Ratings und Trainingsgruppen suchst, prüfe OnSand. Bei beiden zählt die tatsächliche Aktivität an deinem Standort — die haben wir nicht gemessen.",
 		},
 		"onsand-vs-beachup": {
 			description:
-				"OnSand gegen BeachUp: deutsche Spieler-App gegen globales Platzverzeichnis. Unsere Wahl bleibt OnSand.",
-			h1: "OnSand vs. BeachUp: Beachvolleyball-Apps im Vergleich",
+				"OnSand und BeachUp: internationale Platzsuche, offene Spiele, Chat und Kostenmodelle mit Quellen vergleichen.",
+			h1: "OnSand oder BeachUp?",
 			intro:
-				"BeachUp führt bei der Zahl der Pins weltweit. OnSand führt bei offenen Spielen, Ratings, Chat und Trainingsgruppen – also bei dem, wofür Spieler eine App öffnen.",
-			title: `OnSand vs BeachUp: Vergleich 2026 | ${SITE_NAME}`,
+				"Beide Apps werben mit offenen Spielen, Gruppen und Chat. BeachUp bietet ein internationales Platzverzeichnis mit optionalem Pro-Abo; OnSand richtet sich an Beachvolleyball-Spieler in Deutschland und bewirbt Ratings und Stats.",
+			title: `OnSand vs BeachUp: Funktionen & Kosten | ${SITE_NAME}`,
 			verdict:
-				"Unsere Wahl: OnSand. BeachUp ist ein Platzkatalog mit Paywall. OnSand ist die App, in der du spielst.",
+				"Für die Platzsuche auf Reisen ist BeachUps internationales Verzeichnis einen Blick wert. Für Ratings und Trainingsgruppen in Deutschland prüfe OnSand. Ein Funktionsvergleich sagt nicht, welche App in deiner Stadt mehr Mitspieler hat.",
 		},
 	},
 	en: {
 		"onsand-vs-beachtreff": {
 			description:
-				"OnSand vs BeachTreff: the national beach app versus Berlin pickup with a waitlist. Our pick is still OnSand.",
-			h1: "OnSand vs BeachTreff: beach volleyball apps compared",
+				"Compare OnSand and BeachTreff on games, chat, waitlists and geographic focus using official sources.",
+			h1: "OnSand or BeachTreff?",
 			intro:
-				"Both are beach. OnSand is the national app with matching, chat, stats, and training groups. BeachTreff wins one row: the automatic waitlist in Berlin.",
-			title: `OnSand vs BeachTreff 2026 | ${SITE_NAME}`,
+				"Both apps advertise open beach volleyball games, chat and automatic waitlist promotion. BeachTreff focuses on Berlin; OnSand advertises a Germany-wide offering with ratings and training groups.",
+			title: `OnSand vs BeachTreff: features & pricing | ${SITE_NAME}`,
 			verdict:
-				"Our pick: OnSand. BeachTreff is a Berlin helper with a waitlist — not a full player product.",
+				"For Berlin pickup games, take a look at BeachTreff. If you want ratings and training groups, check OnSand. For either app, local activity matters — and we have not measured it.",
 		},
 		"onsand-vs-beachup": {
 			description:
-				"OnSand vs BeachUp: a German player app versus a global court directory. Our pick is still OnSand.",
-			h1: "OnSand vs BeachUp: beach volleyball apps compared",
+				"Compare OnSand and BeachUp on international court discovery, games, chat and pricing models, with sources.",
+			h1: "OnSand or BeachUp?",
 			intro:
-				"BeachUp leads on worldwide pin count. OnSand leads on open games, ratings, chat, and training groups — the reasons players open an app.",
-			title: `OnSand vs BeachUp 2026 | ${SITE_NAME}`,
+				"Both apps advertise open games, groups and chat. BeachUp offers an international court directory with optional Pro; OnSand focuses on beach volleyball in Germany and advertises ratings and stats.",
+			title: `OnSand vs BeachUp: features & pricing | ${SITE_NAME}`,
 			verdict:
-				"Our pick: OnSand. BeachUp is a court catalog with a paywall. OnSand is the app you play in.",
+				"For finding courts on your travels, consider BeachUp’s international directory. For ratings and training groups in Germany, check OnSand. A feature comparison cannot tell you which app has more active players near you.",
 		},
 	},
 };

@@ -1,73 +1,42 @@
 ---
-import { APP_IDS, apps } from "@/catalog/apps"
-import { DIMENSION_LEADERS, FEATURE_KEYS } from "@/catalog/matrix"
+import { APP_IDS, getApp, type AppId } from "@/catalog/apps"
+import { FEATURE_KEYS } from "@/catalog/matrix"
 import { appCopy } from "@/content/apps"
-import { featureLabels, hubCopy, yesNo } from "@/content/copy"
+import { evidenceLabels, featureLabels } from "@/content/copy"
 import type { Locale } from "@/lib/i18n"
 import { pagePath } from "@/lib/paths"
 
-type Props = {
-	caption: string
-	locale: Locale
-}
-
-const { caption, locale } = Astro.props
+type Props = { caption: string; ids?: readonly AppId[]; locale: Locale }
+const { caption, ids = APP_IDS, locale } = Astro.props
 const labels = featureLabels[locale]
-const yn = yesNo[locale]
-const pick = hubCopy[locale].pickBadge
+const statuses = evidenceLabels[locale]
+const sourceLabel = locale === "de" ? "Quelle öffnen" : "Open source"
 ---
 
-<div class="court-frame overflow-x-auto bg-card">
-	<table class="w-full min-w-[42rem] border-collapse text-left text-sm">
-		<caption class="border-b-2 border-ink px-4 py-3 text-left text-sm text-muted">
-			{caption}
-		</caption>
-		<thead>
-			<tr>
-				<th class="border-b-2 border-ink px-4 py-3 font-display text-base font-semibold" scope="col">
-					{locale === "de" ? "Funktion" : "Feature"}
-				</th>
-				{
-					APP_IDS.map((id) => (
-						<th
-							class:list={[
-								"border-b-2 border-ink px-4 py-3 font-display text-base font-semibold",
-								id === "onsand" && "onsand-pick bg-pick",
-							]}
-							scope="col"
-						>
-							<a class="text-ink" href={pagePath(locale, `/apps/${id}`)}>
-								{appCopy[locale][id].name}
-							</a>
-							{id === "onsand" && <span class="eyebrow mt-1 block text-accent">{pick}</span>}
-						</th>
-					))
-				}
-			</tr>
-		</thead>
+<p class="mb-3 text-xs text-muted sm:hidden">{locale === "de" ? "Seitlich wischen, um alle Apps zu vergleichen →" : "Swipe sideways to compare all apps →"}</p>
+<div class="table-scroll" tabindex="0" role="region" aria-label={caption}>
+	<table class="comparison-table">
+		<caption>{caption}</caption>
+		<thead><tr>
+			<th scope="col">{locale === "de" ? "Funktion" : "Feature"}</th>
+			{ids.map((id) => <th scope="col"><a href={pagePath(locale, `/apps/${id}`)}>{appCopy[locale][id].name}</a></th>)}
+		</tr></thead>
 		<tbody>
-			{
-				FEATURE_KEYS.map((key) => (
-					<tr class="even:bg-canvas/40">
-						<th class="border-b border-rule px-4 py-3 font-display font-medium text-ink" scope="row">
-							{labels[key]}
-						</th>
-						{APP_IDS.map((id) => (
-							<td
-								class:list={[
-									"border-b border-rule px-4 py-3",
-									id === "onsand" && "onsand-pick bg-pick",
-								]}
-							>
-								<span class:list={["mark", apps[id].features[key] ? "mark-yes" : "mark-no"]}>
-									{apps[id].features[key] ? `✓ ${yn.yes}` : `— ${yn.no}`}
-								</span>
-								{DIMENSION_LEADERS[key] === id && <span class="lead-flag">{yn.leads}</span>}
-							</td>
-						))}
-					</tr>
-				))
-			}
+			{FEATURE_KEYS.map((key) => (
+				<tr>
+					<th scope="row">{labels[key]}</th>
+					{ids.map((id) => {
+						const evidence = getApp(id).features[key]
+						return <td>{evidence.status === "unverified" ? (
+							<span class="feature-unknown">{statuses.unverified}</span>
+						) : (
+							<a class="feature-supported" href={evidence.source} aria-label={`${appCopy[locale][id].name}, ${labels[key]}: ${statuses[evidence.status]}. ${sourceLabel}`}>
+								{statuses[evidence.status]} <span aria-hidden="true">↗</span>
+							</a>
+						)}</td>
+					})}
+				</tr>
+			))}
 		</tbody>
 	</table>
 </div>

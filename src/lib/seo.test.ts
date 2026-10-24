@@ -75,7 +75,7 @@ describe("json-ld", () => {
 	test("hub ItemList points at first-party profile URLs", () => {
 		const schema = hubItemListJsonLd("de");
 		const items = schema.itemListElement as readonly { url: string }[];
-		expect(items[0]?.url).toBe(`${SITE_URL}/de/apps/onsand`);
+		expect(items.map((item) => item.url)).toEqual(APP_IDS.map((id) => `${SITE_URL}/de/apps/${id}`));
 		expect(items.every((item) => item.url.startsWith(`${SITE_URL}/`))).toBe(true);
 	});
 
@@ -128,7 +128,7 @@ describe("document titles", () => {
 	});
 
 	test("German hub and OnSand profile target distinct Beachvolleyball intents", () => {
-		expect(hubCopy.de.title).toContain("Beste Beachvolleyball-App");
+		expect(hubCopy.de.title).toContain("Beachvolleyball-Apps im Vergleich");
 		expect(appCopy.de.onsand.pageTitle).toContain("OnSand");
 		expect(appCopy.de.onsand.pageTitle).toContain("Beachvolleyball");
 		expect(hubCopy.de.title).not.toBe(appCopy.de.onsand.pageTitle);

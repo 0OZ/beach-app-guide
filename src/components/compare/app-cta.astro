@@ -1,60 +1,27 @@
 ---
-import type { AppId } from "@/catalog/apps"
-import { getApp } from "@/catalog/apps"
+import { getApp, type AppId } from "@/catalog/apps"
 import { appCopy } from "@/content/apps"
-import { hubCopy } from "@/content/copy"
 import type { Locale } from "@/lib/i18n"
-import {
-	ONSAND_CLOUD_URL,
-	ONSAND_COURTS_URL,
-	ONSAND_MATCHMAKING_URL,
-} from "@/catalog/urls"
+import { ONSAND_COURTS_URL, ONSAND_MATCHMAKING_URL } from "@/catalog/urls"
 
-type Props = {
-	id: AppId
-	locale: Locale
-}
-
+type Props = { id: AppId; locale: Locale }
 const { id, locale } = Astro.props
 const app = getApp(id)
 const copy = appCopy[locale][id]
-const storeLabel = locale === "de" ? "Offizielle Website" : "Official site"
-const appleLabel = locale === "de" ? "App Store" : "App Store"
-const playLabel = locale === "de" ? "Google Play" : "Google Play"
-const matchmakingLabel = locale === "de" ? "Spiele finden auf OnSand" : "Find games on OnSand"
-const courtsLabel = locale === "de" ? "Beachvolleyball-Plätze" : "Beach volleyball courts"
-const clubLabel = locale === "de" ? "Vereinssoftware auf onsand.cloud" : "Club software on onsand.cloud"
-const pickCta = hubCopy[locale].pickCta
+const siteLabel = locale === "de" ? "Offizielle Website" : "Official website"
 ---
 
-<nav class="mt-10 flex flex-col items-start gap-2.5" aria-label="Downloads">
-	{
-		id === "onsand" ? (
-			<a class="cta-button onsand-pick mb-2" href={app.siteUrl} rel="noopener">
-				{pickCta}
-			</a>
-		) : (
-			<a href={app.siteUrl} rel="noopener">
-				{storeLabel}: {copy.name}
-			</a>
-		)
-	}
-	{id === "onsand" && (
-		<a href={app.siteUrl} rel="noopener">
-			{storeLabel}: {copy.name}
-		</a>
-	)}
-	{app.appleUrl && <a href={app.appleUrl} rel="noopener">{appleLabel}</a>}
-	{app.playUrl && <a href={app.playUrl} rel="noopener">{playLabel}</a>}
-	{
-		id === "onsand" && (
-			<>
-				<a href={ONSAND_MATCHMAKING_URL} rel="noopener">{matchmakingLabel}</a>
-				<a href={ONSAND_COURTS_URL} rel="noopener">{courtsLabel}</a>
-				{app.clubSoftwareUrl && (
-					<a href={ONSAND_CLOUD_URL} rel="noopener">{clubLabel}</a>
-				)}
-			</>
-		)
-	}
-</nav>
+<section class="section" aria-labelledby="downloads-heading">
+	<h2 id="downloads-heading" class="text-2xl">{locale === "de" ? "Quellen & Downloads" : "Sources & downloads"}</h2>
+	<p class="mt-3 text-sm text-muted">{locale === "de" ? "Angaben des Anbieters prüfen und die App selbst ausprobieren." : "Check the developer’s claims and try the app yourself."}</p>
+	<nav class="hero-actions" aria-label={`${copy.name} Downloads`}>
+		<a class="cta-button" href={app.siteUrl}>{siteLabel} ↗</a>
+		<a class="text-link" href={app.appleUrl}>App Store ↗</a>
+		<a class="text-link" href={app.playUrl}>Google Play ↗</a>
+	</nav>
+	{id === "onsand" && <ul class="source-list">
+		<li><a href={ONSAND_MATCHMAKING_URL}>{locale === "de" ? "Spielsuche" : "Find games"}</a></li>
+		<li><a href={ONSAND_COURTS_URL}>{locale === "de" ? "Plätze finden" : "Find courts"}</a></li>
+		{app.clubSoftwareUrl && <li><a href={app.clubSoftwareUrl}>{locale === "de" ? "Separate Vereinssoftware" : "Separate club software"}</a></li>}
+	</ul>}
+</section>

@@ -15,42 +15,45 @@ import {
 	PLAYTOMIC_SITE_URL,
 } from "./urls";
 
-export const APP_IDS = ["onsand", "beachup", "beachtreff", "playtomic"] as const;
-
+// Alphabetical, not ranked.
+export const APP_IDS = ["beachtreff", "beachup", "onsand", "playtomic"] as const;
 export type AppId = (typeof APP_IDS)[number];
 export type Geography = "berlin" | "germany" | "global";
-export type Price = "free" | "freemium" | "paid";
-export type SportFocus = "beach" | "genericPickup" | "racket";
+export type Price = "free" | "freemium";
+export type SportFocus = "beach" | "racket";
+export type FeatureEvidence =
+	| { source: string; status: "documented" | "external" }
+	| { status: "unverified" };
 
 export type CatalogApp = {
-	appleUrl?: string;
+	appleUrl: string;
 	clubSoftwareUrl?: string;
-	features: Record<FeatureKey, boolean>;
+	features: Record<FeatureKey, FeatureEvidence>;
 	geography: Geography;
+	icon: string;
 	id: AppId;
-	playUrl?: string;
+	playUrl: string;
 	price: Price;
 	siteUrl: string;
 	sportFocus: SportFocus;
 };
 
-const feature = (values: Record<FeatureKey, boolean>): Record<FeatureKey, boolean> => values;
-
 export const apps: Record<AppId, CatalogApp> = {
 	beachtreff: {
 		appleUrl: APPLE_STORE_BEACHTREFF_URL,
-		features: feature({
-			courtBooking: false,
-			courtDirectory: true,
-			freeForPlayers: true,
-			inAppChat: false,
-			openGames: true,
-			ratingsOrStats: false,
-			skillMatching: true,
-			trainingGroups: false,
-			waitlist: true,
-		}),
+		features: {
+			courtBooking: { source: BEACHTREFF_SITE_URL, status: "external" },
+			courtDirectory: { source: APPLE_STORE_BEACHTREFF_URL, status: "documented" },
+			freeForPlayers: { source: BEACHTREFF_SITE_URL, status: "documented" },
+			inAppChat: { source: APPLE_STORE_BEACHTREFF_URL, status: "documented" },
+			openGames: { source: APPLE_STORE_BEACHTREFF_URL, status: "documented" },
+			ratingsOrStats: { status: "unverified" },
+			skillMatching: { source: APPLE_STORE_BEACHTREFF_URL, status: "documented" },
+			trainingGroups: { status: "unverified" },
+			waitlist: { source: BEACHTREFF_SITE_URL, status: "documented" },
+		},
 		geography: "berlin",
+		icon: "beachtreff.jpg",
 		id: "beachtreff",
 		playUrl: PLAY_STORE_BEACHTREFF_URL,
 		price: "free",
@@ -59,18 +62,25 @@ export const apps: Record<AppId, CatalogApp> = {
 	},
 	beachup: {
 		appleUrl: APPLE_STORE_BEACHUP_URL,
-		features: feature({
-			courtBooking: false,
-			courtDirectory: true,
-			freeForPlayers: false,
-			inAppChat: true,
-			openGames: true,
-			ratingsOrStats: false,
-			skillMatching: true,
-			trainingGroups: false,
-			waitlist: false,
-		}),
+		features: {
+			courtBooking: { status: "unverified" },
+			courtDirectory: { source: APPLE_STORE_BEACHUP_URL, status: "documented" },
+			freeForPlayers: { source: APPLE_STORE_BEACHUP_URL, status: "documented" },
+			inAppChat: {
+				source: "https://www.beachup.app/en/news/2023-08-updates/",
+				status: "documented",
+			},
+			openGames: { source: APPLE_STORE_BEACHUP_URL, status: "documented" },
+			ratingsOrStats: { status: "unverified" },
+			skillMatching: {
+				source: "https://www.beachup.app/en/news/may-update-is-here/",
+				status: "documented",
+			},
+			trainingGroups: { source: BEACHUP_SITE_URL, status: "documented" },
+			waitlist: { status: "unverified" },
+		},
 		geography: "global",
+		icon: "beachup.jpg",
 		id: "beachup",
 		playUrl: PLAY_STORE_BEACHUP_URL,
 		price: "freemium",
@@ -80,18 +90,19 @@ export const apps: Record<AppId, CatalogApp> = {
 	onsand: {
 		appleUrl: APPLE_STORE_ONSAND_URL,
 		clubSoftwareUrl: ONSAND_CLOUD_URL,
-		features: feature({
-			courtBooking: false,
-			courtDirectory: true,
-			freeForPlayers: true,
-			inAppChat: true,
-			openGames: true,
-			ratingsOrStats: true,
-			skillMatching: true,
-			trainingGroups: true,
-			waitlist: false,
-		}),
+		features: {
+			courtBooking: { source: "https://onsand.app/de/courts", status: "external" },
+			courtDirectory: { source: ONSAND_APP_URL, status: "documented" },
+			freeForPlayers: { source: ONSAND_APP_URL, status: "documented" },
+			inAppChat: { source: APPLE_STORE_ONSAND_URL, status: "documented" },
+			openGames: { source: APPLE_STORE_ONSAND_URL, status: "documented" },
+			ratingsOrStats: { source: APPLE_STORE_ONSAND_URL, status: "documented" },
+			skillMatching: { source: APPLE_STORE_ONSAND_URL, status: "documented" },
+			trainingGroups: { source: APPLE_STORE_ONSAND_URL, status: "documented" },
+			waitlist: { source: "https://onsand.app/de/features/find-match", status: "documented" },
+		},
 		geography: "germany",
+		icon: "onsand.jpg",
 		id: "onsand",
 		playUrl: PLAY_STORE_ONSAND_URL,
 		price: "free",
@@ -100,18 +111,19 @@ export const apps: Record<AppId, CatalogApp> = {
 	},
 	playtomic: {
 		appleUrl: APPLE_STORE_PLAYTOMIC_URL,
-		features: feature({
-			courtBooking: true,
-			courtDirectory: true,
-			freeForPlayers: false,
-			inAppChat: true,
-			openGames: true,
-			ratingsOrStats: true,
-			skillMatching: true,
-			trainingGroups: false,
-			waitlist: false,
-		}),
+		features: {
+			courtBooking: { source: APPLE_STORE_PLAYTOMIC_URL, status: "documented" },
+			courtDirectory: { source: PLAYTOMIC_SITE_URL, status: "documented" },
+			freeForPlayers: { source: APPLE_STORE_PLAYTOMIC_URL, status: "documented" },
+			inAppChat: { source: APPLE_STORE_PLAYTOMIC_URL, status: "documented" },
+			openGames: { source: APPLE_STORE_PLAYTOMIC_URL, status: "documented" },
+			ratingsOrStats: { source: APPLE_STORE_PLAYTOMIC_URL, status: "documented" },
+			skillMatching: { source: APPLE_STORE_PLAYTOMIC_URL, status: "documented" },
+			trainingGroups: { source: "https://playtomic.com/academy", status: "documented" },
+			waitlist: { status: "unverified" },
+		},
 		geography: "global",
+		icon: "playtomic.jpg",
 		id: "playtomic",
 		playUrl: PLAY_STORE_PLAYTOMIC_URL,
 		price: "freemium",
@@ -121,6 +133,5 @@ export const apps: Record<AppId, CatalogApp> = {
 };
 
 export const getApp = (id: AppId): CatalogApp => apps[id];
-
 export const isAppId = (value: string): value is AppId =>
 	(APP_IDS as readonly string[]).includes(value);

@@ -1,4 +1,7 @@
 ---
+import { APP_IDS, getApp } from "@/catalog/apps"
+import { appCopy } from "@/content/apps"
+import { REVIEWED_AT } from "@/lib/site"
 import Breadcrumbs from "@/components/layout/breadcrumbs.astro"
 import BaseLayout from "@/components/layout/base-layout.astro"
 import { methodikCopy } from "@/content/methodik"
@@ -29,6 +32,7 @@ const crumbs = [
 >
 	<Breadcrumbs locale={locale} crumbs={crumbs} />
 	<h1 class="text-4xl sm:text-5xl">{copy.h1}</h1>
+	<p class="mt-4 text-sm text-muted">{locale === "de" ? "Quellenstand" : "Sources reviewed"}: <time datetime={REVIEWED_AT}>{REVIEWED_AT}</time></p>
 	<hr class="court-rule mt-8" />
 	<div class="soft-card mt-8 max-w-2xl">
 		{
@@ -41,4 +45,18 @@ const crumbs = [
 			)
 		}
 	</div>
+	<section class="section" aria-labelledby="sources-heading">
+		<h2 id="sources-heading">{locale === "de" ? "Offizielle Quellen" : "Official sources"}</h2>
+		<p class="section-intro">{locale === "de" ? "Jede belegte Tabellenzelle verlinkt zusätzlich die konkrete Produktseite, Store-Beschreibung oder Versionsnotiz. App-Icons stammen aus den jeweiligen App-Store-Einträgen." : "Each documented table cell also links to the specific product page, store description or release note. App icons come from the respective App Store listings."}</p>
+		<ul class="profile-grid">
+			{APP_IDS.map((id) => <li class="profile-card">
+				<h3>{appCopy[locale][id].name}</h3>
+				<ul class="source-list">
+					<li><a href={getApp(id).siteUrl}>{locale === "de" ? "Website" : "Website"}</a></li>
+					<li><a href={getApp(id).appleUrl}>App Store</a></li>
+					<li><a href={getApp(id).playUrl}>Google Play</a></li>
+				</ul>
+			</li>)}
+		</ul>
+	</section>
 </BaseLayout>

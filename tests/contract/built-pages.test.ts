@@ -50,11 +50,15 @@ describe("built hub HTML", () => {
 		expect(html).toContain('hreflang="x-default"');
 	});
 
-	test("names OnSand as the overall pick and links out to onsand.app", () => {
+	test("discloses ownership and renders evidence without predetermined winners", () => {
 		const html = read("de/index.html");
-		expect(html).toContain("Unsere Wahl");
+		expect(html).toContain("OnSand-Betreiber");
 		expect(html).toContain(`href="${ONSAND_APP_URL}"`);
-		expect(html).toContain("onsand-pick");
+		expect(html).toContain("Belegt");
+		expect(html).toContain("Nicht belegt");
+		expect(html).toContain("Beim Anbieter");
+		expect(html).not.toContain("Unsere Wahl");
+		expect(html).not.toContain("onsand-pick");
 		expect(html).not.toContain('rel="nofollow"');
 	});
 
@@ -82,10 +86,12 @@ describe("built vs HTML", () => {
 		expect(html).toContain("FAQPage");
 	});
 
-	test("vs pages pick OnSand and link out to onsand.app", () => {
+	test("vs pages disclose ownership and let readers choose either profile", () => {
 		const html = read("de/vergleich/onsand-vs-beachtreff/index.html");
-		expect(html).toContain("Unsere Wahl");
-		expect(html).toContain(`href="${ONSAND_APP_URL}"`);
+		expect(html).toContain("OnSand-Betreiber");
+		expect(html).toContain('href="/beach-app-guide/de/apps/onsand"');
+		expect(html).toContain('href="/beach-app-guide/de/apps/beachtreff"');
+		expect(html).not.toContain("Unsere Wahl");
 		expect(html).not.toContain('rel="nofollow"');
 	});
 });

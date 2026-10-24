@@ -5,28 +5,20 @@ import type { Locale } from "@/lib/i18n"
 import { pagePath } from "@/lib/paths"
 import { SITE_NAME } from "@/lib/site"
 
-type Props = {
-	locale: Locale
-	path: string
-}
-
+type Props = { locale: Locale; path: string }
 const { locale, path } = Astro.props
 const nav = navCopy[locale]
 ---
 
-<header class="border-b-2 border-ink bg-card">
-	<div class="mx-auto flex max-w-4xl flex-wrap items-baseline justify-between gap-4 px-5 py-5">
-		<a
-			class="font-display text-xl font-bold tracking-tight text-ink no-underline"
-			href={pagePath(locale, "/")}>{SITE_NAME}</a
-		>
-		<nav
-			class="eyebrow flex flex-wrap items-center gap-x-5 gap-y-2"
-			aria-label="Primary"
-		>
-			<a href={pagePath(locale, "/")}>{nav.home}</a>
-			<a href={pagePath(locale, "/apps/onsand")}>OnSand</a>
-			<a href={pagePath(locale, "/methodik")}>{nav.methodology}</a>
+<header class="site-header">
+	<div class="site-shell header-inner">
+		<a class="brand" href={pagePath(locale, "/")}>
+			<span class="brand-mark" aria-hidden="true">↗</span>{SITE_NAME}
+		</a>
+		<nav class="primary-nav" aria-label={locale === "de" ? "Hauptnavigation" : "Primary navigation"}>
+			<a href={`${pagePath(locale, "/")}#profiles`}>{nav.apps}</a>
+			<a href={`${pagePath(locale, "/")}#features`}>{nav.comparisons}</a>
+			<a href={pagePath(locale, "/methodik")} aria-current={path === "/methodik" ? "page" : undefined}>{nav.methodology}</a>
 			<LocaleSwitch locale={locale} path={path} />
 		</nav>
 	</div>

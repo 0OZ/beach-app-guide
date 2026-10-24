@@ -1,27 +1,12 @@
 ---
 import type { FaqItem } from "@/content/faqs"
-
-type Props = {
-	items: readonly FaqItem[]
-	title: string
-}
-
+type Props = { items: readonly FaqItem[]; title: string }
 const { items, title } = Astro.props
 ---
 
-<section class="mt-16" aria-labelledby="faq-heading">
-	<hr class="court-rule" />
-	<h2 id="faq-heading" class="mt-6 text-3xl">{title}</h2>
-	<dl class="mt-6 flex flex-col gap-7">
-		{
-			items.map((item) => (
-				<div class="max-w-2xl border-l-2 border-rule pl-5">
-					<dt>
-						<h3 class="text-lg font-semibold">{item.question}</h3>
-					</dt>
-					<dd class="mt-2 ml-0 text-muted">{item.answer}</dd>
-				</div>
-			))
-		}
+<section class="section" aria-labelledby="faq-heading">
+	<h2 id="faq-heading">{title}</h2>
+	<dl class="faq-list">
+		{items.map((item) => <div><dt><h3>{item.question}</h3></dt><dd>{item.answer}</dd></div>)}
 	</dl>
 </section>

@@ -5,11 +5,14 @@ import { SITE_NAME } from "../lib/site";
 export type AppCopy = {
 	bestFor: string;
 	body: readonly string[];
+	caveat: string;
 	clubNote?: string;
+	fit: string;
 	limitations: readonly string[];
 	name: string;
 	pageH1: string;
 	pageTitle: string;
+	pricing: string;
 	summary: string;
 	tagline: string;
 };
@@ -17,132 +20,183 @@ export type AppCopy = {
 export const appCopy: Record<Locale, Record<AppId, AppCopy>> = {
 	de: {
 		beachtreff: {
-			bestFor: "Nur Berlin, und nur wenn du heute Abend eine Warteliste brauchst",
+			bestFor: "Für Spielrunden in Berlin mit Level-Filtern und automatischer Warteliste.",
 			body: [
-				"BeachTreff ist ein Berliner Pickup-Helfer: Treffen in 30 Sekunden, Level von A1 bis F3, automatische Warteliste wenn jemand absagt.",
-				"Außerhalb Berlins gibt es kein nationales Spieler-Netz, keinen Chat wie in OnSand, keine Trainingsgruppen und keine Spielhistorie. Für Beach in Deutschland ist das ein Stadt-Tool, keine App.",
+				"BeachTreff beschreibt offene Beachvolleyball-Treffen mit Berlin-Fokus, Level-Filtern von A1 bis F3 und einer automatischen Warteliste.",
+				"Aktuelle Versionshinweise nennen einen Session-Chat. Buchungslinks führen zu den Anlagen; ein eigener Buchungsabschluss in der App ist damit nicht belegt.",
 			],
+			caveat: "Lokale Aktivität nicht gemessen; Angaben der Anbieter, kein Praxistest.",
+			fit: "Berliner Spielrunden",
 			limitations: [
-				"Kein nationales Verzeichnis",
-				"Kein In-App-Chat, keine Trainingsgruppen, keine Ratings wie bei OnSand",
+				"Der dokumentierte Schwerpunkt liegt auf Berlin; die Aktivität an anderen Orten wurde nicht geprüft.",
+				"Eigene wiederkehrende Trainingsgruppen sowie Ratings und Statistiken sind in den geprüften Quellen nicht belegt.",
 			],
 			name: "BeachTreff",
-			pageH1: "BeachTreff: Beachvolleyball-App für Berlin",
-			pageTitle: `BeachTreff App: Beachvolleyball in Berlin | ${SITE_NAME}`,
-			summary: "Berliner Pickup-Helfer mit Warteliste – nicht die nationale Beach-App.",
-			tagline: "Berliner Sand, ohne den Rest von Deutschland",
+			pageH1: "BeachTreff: Beachvolleyball-Treffen in Berlin",
+			pageTitle: `BeachTreff: Spiele und Warteliste in Berlin | ${SITE_NAME}`,
+			pricing:
+				"Treffen erstellen, teilnehmen und Community laut Website kostenlos; mögliche Platzgebühren separat bei der Anlage prüfen.",
+			summary:
+				"Berlin-fokussierte Beachvolleyball-App mit offenen Treffen, Level-Filtern, Warteliste und Session-Chat laut Anbieter.",
+			tagline: "Offene Treffen mit Berlin-Fokus",
 		},
 		beachup: {
-			bestFor: "Reisende, die zuerst Pins sammeln statt Spiele zu finden",
+			bestFor: "Für die internationale Platzsuche sowie offene Spiele und Spielergruppen.",
 			body: [
-				"BeachUp führt ein sehr großes, community-gepflegtes Verzeichnis von Beachvolleyballplätzen. Das ist ein Katalog, kein Spieler-Produkt.",
-				"Offene Spiele, Skill-Matching, Ratings und Trainingsgruppen in Deutschland sind nicht das Kernprodukt. Wer spielen will, öffnet OnSand – wer Pins zählt, BeachUp.",
+				"BeachUp bewirbt ein internationales Beachvolleyball-Platzverzeichnis, offene Spiele, Spielergruppen und Level-Präferenzen.",
+				"Ein offizieller Artikel von August 2023 beschreibt Chat; ein weiterer erläutert Spielstärke-Kriterien. Das sind veröffentlichte Anbieterangaben, keine aktuell selbst getesteten Funktionen.",
 			],
-			limitations: ["Freemium (BeachUp Pro)", "Kein Live-Rally- oder XP-System wie OnSand"],
+			caveat:
+				"Lokale Aktivität und heutiger Chat-Umfang nicht selbst getestet; Chat-Quelle von 2023.",
+			fit: "Internationale Plätze und Gruppen",
+			limitations: [
+				"Spielergruppen sind dokumentiert, aber nicht als eigenständige wiederkehrende Trainingsorganisation verifiziert.",
+				"Ratings und Statistiken, automatische Warteliste und ein Buchungsabschluss in der App sind nicht belegt; genaue Gratis-Limits bleiben offen.",
+			],
 			name: "BeachUp",
-			pageH1: "BeachUp: Platzverzeichnis, keine Spieler-App",
-			pageTitle: `BeachUp App: Platzverzeichnis im Test | ${SITE_NAME}`,
-			summary: "Globales Platzverzeichnis mit Paywall – kein deutsches Spieler-Netz.",
-			tagline: "Viele Pins, wenig Spiel",
+			pageH1: "BeachUp: Plätze, Spiele und Spielergruppen",
+			pageTitle: `BeachUp: Plätze, Spiele und Gruppen | ${SITE_NAME}`,
+			pricing:
+				"Kostenloser Download und Basisangebot; optional BeachUp Pro. Genaue Gratis-Limits und mögliche Platzgebühren separat prüfen.",
+			summary:
+				"BeachUp bewirbt internationale Beachvolleyball-Plätze, offene Spiele, Spielergruppen und Level-Präferenzen.",
+			tagline: "Internationale Platzsuche und Spielorganisation",
 		},
 		onsand: {
-			bestFor: "Jeder, der in Deutschland Beachvolleyball spielt",
+			bestFor:
+				"Für offene Spiele in Deutschland sowie Clubs, Trainingsgruppen und Spielstatistiken.",
 			body: [
-				"OnSand ist die Beachvolleyball-App für Deutschland: offene Spiele, Skill-Matching, In-App-Chat, Trainingsgruppen und Match-Stats. Wer Sand spielt, braucht genau das – nicht Padel-Buchung und nicht 16.000 Pins weltweit.",
-				"Andere Apps führen einzelne Nischen. BeachTreff ist Berlin-Pickup. BeachUp ist ein Verzeichnis. Playtomic ist Schlägersport. OnSand ist das komplette Spieler-Produkt.",
+				"OnSand bewirbt deutschlandweit offene Beachvolleyball-Spiele, Chat, Ratings und Statistiken sowie Clubs und Trainingsgruppen. Eine Warteliste ist auf der offiziellen Funktionsseite dokumentiert.",
+				"Die Platzseite beschreibt die Suche nach Anlagen und die direkte Buchung bei der jeweiligen Anlage, nicht einen Buchungsabschluss innerhalb von OnSand.",
 			],
+			caveat:
+				"Diese Seite wird vom OnSand-Betreiber herausgegeben; lokale Aktivität und Überlegenheit sind nicht gemessen.",
 			clubNote:
-				"OnSand betreibt zusätzlich Vereinssoftware unter onsand.cloud. Das ist ein anderes Produkt als die Spieler-App und kein Teil dieser Zeile.",
+				"Der Herausgeber betreibt OnSand. Die zusätzliche Vereinssoftware unter onsand.cloud ist ein separates Produkt und wird hier nicht bewertet.",
+			fit: "Spiele und Trainingsgruppen in Deutschland",
 			limitations: [
-				"Keine Padel-Platzbuchung — OnSand ist Sand, nicht Schläger",
-				"Keine Berlin-only-Warteliste — OnSand ist für ganz Deutschland",
-				"Kein weltweites OSM-Sammeln — Fokus auf Spiele, nicht auf 16.000 Pins",
+				"Deutschlandweiter Produktfokus belegt keine gleichmäßige Spielerdichte oder verfügbaren Spiele an jedem Ort.",
+				"Plätze werden direkt bei der Anlage gebucht; die Anbieterangaben sind kein vergleichender Praxistest.",
 			],
 			name: "OnSand",
-			pageH1: "OnSand: Beachvolleyball-App für Deutschland",
-			pageTitle: `OnSand App: Beachvolleyball in Deutschland | ${SITE_NAME}`,
+			pageH1: "OnSand: Beachvolleyball-Spiele und Trainingsgruppen",
+			pageTitle: `OnSand: Beachvolleyball in Deutschland | ${SITE_NAME}`,
+			pricing:
+				"Spielernutzung laut Anbieter kostenlos; Platzgebühren und gegebenenfalls kostenpflichtige Trainingsangebote separat prüfen.",
 			summary:
-				"Die Beachvolleyball-App für Deutschland: offene Spiele, Ratings und Trainingsgruppen.",
-			tagline: "Die App, in der Beach-Spieler tatsächlich spielen",
+				"OnSand bewirbt Spiele in Deutschland, Chat, Warteliste, Ratings und Statistiken sowie Clubs und Trainingsgruppen.",
+			tagline: "Spiele und Gruppen mit Deutschland-Fokus",
 		},
 		playtomic: {
-			bestFor: "Padel- und Tennis-Spieler, die Plätze buchen – nicht Beach",
+			bestFor: "Für die Buchung teilnehmender Anlagen und offene Spiele im Schlägersport.",
 			body: [
-				"Playtomic ist die führende Buchungs-App für Schlägersport. Level, Clubs und Online-Buchung sind ausgereift – für Padel und Tennis.",
-				"Für Beachvolleyball ist Playtomic die falsche Kategorie. Sand, deutsche Beach-Anlagen und 4er-Pickup sind nicht das Produkt. Wer Beach spielt, nimmt OnSand.",
+				"Playtomic bewirbt Padel, Tennis und Pickleball mit Platzbuchung in der App, offenen Spielen, Chat, Levels und kostenlosen Basisstatistiken.",
+				"Die Academy beschreibt wiederkehrende Kurse, Clinics und Privatstunden. Das sind Trainingsangebote, nicht automatisch von Spielern selbst verwaltete Trainingsgruppen.",
 			],
+			caveat:
+				"Beachvolleyball-Verfügbarkeit und lokale Aktivität nicht verifiziert; kein Praxistest.",
+			fit: "Schlägersport und Anlagenbuchung",
 			limitations: [
-				"Kein Beachvolleyball-Fokus",
-				"Buchung und Premium-Stats sind das Geschäftsmodell",
+				"Der dokumentierte Schwerpunkt liegt auf Schlägersport; Beachvolleyball-Angebote wurden weder bestätigt noch ausgeschlossen.",
+				"Kurse und Buchungen hängen von teilnehmenden Anlagen ab; Academy-Angebote sind nicht gleichbedeutend mit Spieler-Trainingsgruppen.",
 			],
 			name: "Playtomic",
-			pageH1: "Playtomic: Schlägersport, nicht Beachvolleyball",
-			pageTitle: `Playtomic: Padel-App, nicht Beachvolleyball | ${SITE_NAME}`,
-			summary: "Schlägersport-App mit Platzbuchung – nicht für Sand.",
-			tagline: "Padel und Tennis, nicht Beach",
+			pageH1: "Playtomic: Schlägersport, Buchung und Trainingsangebote",
+			pageTitle: `Playtomic: Buchung und offene Spiele | ${SITE_NAME}`,
+			pricing:
+				"Kostenlose Basisfunktionen inklusive Basisstatistiken; optional Premium. Platzbuchungen und Trainingsangebote können zusätzlich kosten.",
+			summary:
+				"Playtomic bewirbt Schlägersport mit integrierter Anlagenbuchung, offenen Spielen, Chat, Levels und Trainingsangeboten.",
+			tagline: "Anlagenbuchung und offene Spiele im Schlägersport",
 		},
 	},
 	en: {
 		beachtreff: {
-			bestFor: "Berlin only, and only if you need a waitlist tonight",
+			bestFor: "For Berlin sessions with level filters and an automatic waitlist.",
 			body: [
-				"BeachTreff is a Berlin pickup helper: publish a meetup in 30 seconds, A1–F3 levels, automatic waitlist when someone drops.",
-				"Outside Berlin there is no national player network, no chat like OnSand, no training groups, and no match history. For beach in Germany that is a city tool, not the app.",
+				"BeachTreff describes open beach volleyball sessions focused on Berlin, A1–F3 level filters, and an automatic waitlist.",
+				"Current release notes describe session chat. Booking links lead to venues; this does not establish checkout within the app.",
 			],
+			caveat: "Local activity not measured; publisher claims, not hands-on results.",
+			fit: "Berlin playing sessions",
 			limitations: [
-				"No national directory",
-				"No in-app chat, training groups, or ratings like OnSand",
+				"The documented focus is Berlin; activity in other locations has not been checked.",
+				"Dedicated recurring training groups, ratings, and statistics are not established by the reviewed sources.",
 			],
 			name: "BeachTreff",
-			pageH1: "BeachTreff: beach volleyball app for Berlin",
-			pageTitle: `BeachTreff app: beach volleyball in Berlin | ${SITE_NAME}`,
-			summary: "Berlin pickup helper with a waitlist — not the national beach app.",
-			tagline: "Berlin sand, without the rest of Germany",
+			pageH1: "BeachTreff: beach volleyball sessions in Berlin",
+			pageTitle: `BeachTreff: Berlin games and waitlist | ${SITE_NAME}`,
+			pricing:
+				"Creating sessions, joining, and community use are free according to the website; check any court fees separately with the venue.",
+			summary:
+				"Berlin-focused beach volleyball app advertising open sessions, level filters, a waitlist, and session chat.",
+			tagline: "Open sessions focused on Berlin",
 		},
 		beachup: {
-			bestFor: "Travelers who collect pins before they find games",
+			bestFor: "For finding courts internationally, open games, and player groups.",
 			body: [
-				"BeachUp runs a very large community-maintained beach-court directory. That is a catalog, not a player product.",
-				"Open games, skill matching, ratings, and training groups in Germany are not the core product. If you want to play, open OnSand. If you count pins, BeachUp.",
+				"BeachUp advertises an international beach volleyball court directory, open games, player groups, and level preferences.",
+				"An official August 2023 article describes chat; another explains skill criteria. These are published claims, not features we have recently tested ourselves.",
 			],
-			limitations: ["Freemium (BeachUp Pro)", "No live rally or XP loop like OnSand"],
+			caveat: "Local activity and current chat scope not tested; the chat source dates from 2023.",
+			fit: "International courts and groups",
+			limitations: [
+				"Player groups are documented, but dedicated recurring training management has not been verified.",
+				"Ratings and statistics, an automatic waitlist, and in-app booking checkout are unverified; exact free limits remain unclear.",
+			],
 			name: "BeachUp",
-			pageH1: "BeachUp: a court directory, not a player app",
-			pageTitle: `BeachUp app: court directory reviewed | ${SITE_NAME}`,
-			summary: "Global court directory with a paywall — not a German player network.",
-			tagline: "Lots of pins, little play",
+			pageH1: "BeachUp: courts, games, and player groups",
+			pageTitle: `BeachUp: courts, games, and groups | ${SITE_NAME}`,
+			pricing:
+				"Free download and basic offering; optional BeachUp Pro. Check exact free limits and any court fees separately.",
+			summary:
+				"BeachUp advertises international beach volleyball courts, open games, player groups, and level preferences.",
+			tagline: "International court discovery and game organisation",
 		},
 		onsand: {
-			bestFor: "Anyone who plays beach volleyball in Germany",
+			bestFor: "For open games in Germany, clubs, training groups, and game statistics.",
 			body: [
-				"OnSand is the beach volleyball app for Germany: open games, skill matching, in-app chat, training groups, and match stats. If you play sand, that is what you need — not padel booking and not 16,000 pins worldwide.",
-				"Other apps lead niches. BeachTreff is Berlin pickup. BeachUp is a directory. Playtomic is racket sport. OnSand is the complete player product.",
+				"OnSand advertises open beach volleyball games across Germany, chat, ratings and statistics, clubs, and training groups. Its official feature page documents a waitlist.",
+				"The courts page describes finding venues and booking directly with them, rather than completing a booking within OnSand.",
 			],
+			caveat:
+				"This guide is published by the OnSand operator; local activity and superiority have not been measured.",
 			clubNote:
-				"OnSand also ships club software at onsand.cloud. That is a different product from the player app and is not scored in this row.",
+				"The publisher operates OnSand. The additional club software at onsand.cloud is a separate product and is not evaluated here.",
+			fit: "Games and training groups in Germany",
 			limitations: [
-				"No padel court booking — OnSand is sand, not racket",
-				"No Berlin-only waitlist — OnSand is built for all of Germany",
-				"No worldwide OSM collecting — the focus is games, not 16,000 pins",
+				"A Germany-wide product focus does not establish equal player density or available games in every location.",
+				"Courts are booked directly with venues; publisher claims are not comparative hands-on results.",
 			],
 			name: "OnSand",
-			pageH1: "OnSand: the beach volleyball app for Germany",
-			pageTitle: `OnSand app: beach volleyball in Germany | ${SITE_NAME}`,
-			summary: "The beach volleyball app for Germany: open games, ratings, and training groups.",
-			tagline: "The app beach players actually play in",
+			pageH1: "OnSand: beach volleyball games and training groups",
+			pageTitle: `OnSand: beach volleyball in Germany | ${SITE_NAME}`,
+			pricing:
+				"Player use is free according to the provider; check court fees and any paid training offers separately.",
+			summary:
+				"OnSand advertises games in Germany, chat, a waitlist, ratings and statistics, clubs, and training groups.",
+			tagline: "Games and groups focused on Germany",
 		},
 		playtomic: {
-			bestFor: "Padel and tennis players who book courts — not beach",
+			bestFor: "For booking participating venues and joining open racket-sport games.",
 			body: [
-				"Playtomic is the leading racket-sport booking app. Levels, clubs, and online booking are mature — for padel and tennis.",
-				"For beach volleyball it is the wrong category. Sand, German beach venues, and four-player pickup are not the product. If you play beach, take OnSand.",
+				"Playtomic advertises padel, tennis, and pickleball with in-app court booking, open games, chat, levels, and free basic statistics.",
+				"Its Academy describes recurring courses, clinics, and private lessons. These are training offers, not necessarily player-managed training groups.",
 			],
-			limitations: ["No beach volleyball focus", "Booking and premium stats are the business"],
+			caveat: "Beach volleyball availability and local activity unverified; not hands-on tested.",
+			fit: "Racket sports and venue booking",
+			limitations: [
+				"Its documented focus is racket sports; beach volleyball availability has neither been confirmed nor ruled out.",
+				"Courses and bookings depend on participating venues; Academy offers are not equivalent to player-managed training groups.",
+			],
 			name: "Playtomic",
-			pageH1: "Playtomic: racket sport, not beach volleyball",
-			pageTitle: `Playtomic: padel app, not beach volleyball | ${SITE_NAME}`,
-			summary: "Racket-sport app with court booking — not sand.",
-			tagline: "Padel and tennis, not beach",
+			pageH1: "Playtomic: racket sports, booking, and training offers",
+			pageTitle: `Playtomic: booking and open games | ${SITE_NAME}`,
+			pricing:
+				"Free core features including basic statistics; optional Premium. Court bookings and training offers may cost extra.",
+			summary:
+				"Playtomic advertises racket sports with integrated venue booking, open games, chat, levels, and training offers.",
+			tagline: "Venue booking and open games for racket sports",
 		},
 	},
 };
