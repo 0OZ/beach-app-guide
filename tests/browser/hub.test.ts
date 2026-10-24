@@ -47,6 +47,33 @@ describe("hub in the browser", () => {
 	});
 });
 
+describe("mobile accessibility", () => {
+	test.each(["de", "de/apps/onsand"])("%s reflows at 200%% text size", async (path) => {
+		const page = await browser.newPage({ viewport: { height: 812, width: 375 } });
+		await page.goto(`${BASE_URL}/${path}`, { waitUntil: "networkidle" });
+		await page.addStyleTag({ content: "html { font-size: 200%; }" });
+		const width = await page.evaluate(() => document.documentElement.scrollWidth);
+		expect(width).toBeLessThanOrEqual(375);
+		await page.close();
+	});
+
+	test("header links have comfortable touch targets", async () => {
+		const page = await browser.newPage({ viewport: { height: 812, width: 375 } });
+		await page.goto(`${BASE_URL}/de`, { waitUntil: "networkidle" });
+		const targets = await page.locator("header a").evaluateAll((links) =>
+			links.map((link) => {
+				const { width, height } = link.getBoundingClientRect();
+				return { height, label: link.textContent?.trim(), width };
+			}),
+		);
+		for (const target of targets) {
+			expect(target.width, target.label).toBeGreaterThanOrEqual(44);
+			expect(target.height, target.label).toBeGreaterThanOrEqual(44);
+		}
+		await page.close();
+	});
+});
+
 describe("vs page in the browser", () => {
 	test("OnSand vs BeachTreff table is visible and has FAQ JSON-LD", async () => {
 		const page = await browser.newPage();

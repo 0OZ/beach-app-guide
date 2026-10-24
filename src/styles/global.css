@@ -41,6 +41,7 @@ h3 {
 	font-weight: 700;
 	letter-spacing: -0.015em;
 	line-height: 1.08;
+	overflow-wrap: anywhere;
 	text-wrap: balance;
 }
 
@@ -48,6 +49,13 @@ a {
 	color: var(--color-accent);
 	text-decoration-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
 	text-underline-offset: 3px;
+}
+
+header a {
+	align-items: center;
+	display: inline-flex;
+	min-height: 44px;
+	min-width: 44px;
 }
 
 a:hover {
