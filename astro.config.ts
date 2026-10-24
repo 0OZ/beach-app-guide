@@ -31,12 +31,6 @@ export default defineConfig({
 		},
 	],
 	output: "static",
-	redirects: {
-		"/": {
-			destination: "/de",
-			status: 308,
-		},
-	},
 	site: SITE_ORIGIN,
 	vite: {
 		plugins: [tailwindcss()],

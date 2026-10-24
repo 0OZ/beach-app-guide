@@ -35,6 +35,12 @@ describe("built OnSand profile HTML", () => {
 });
 
 describe("built hub HTML", () => {
+	test("entry redirect stays within the GitHub Pages project", () => {
+		const html = read("index.html");
+		expect(html).toContain('content="0;url=/beach-app-guide/de"');
+		expect(html).toContain('href="/beach-app-guide/de"');
+	});
+
 	test("renders an indexable comparison table", () => {
 		const html = read("de/index.html");
 		expect(html).toContain("<table");

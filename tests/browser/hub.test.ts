@@ -30,9 +30,10 @@ afterAll(async () => {
 });
 
 describe("hub in the browser", () => {
-	test("German hub has H1, canonical, JSON-LD, and a visible table", async () => {
+	test("entry URL reaches the German hub with H1, canonical, JSON-LD, and a visible table", async () => {
 		const page = await browser.newPage();
-		await page.goto(`${BASE_URL}/de`, { waitUntil: "networkidle" });
+		await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
+		expect(new URL(page.url()).pathname).toMatch(/\/beach-app-guide\/de\/?$/);
 		expect(await page.getByRole("heading", { level: 1 }).textContent()).toContain("OnSand");
 		expect(await page.getByRole("heading", { level: 1 }).textContent()).toContain(
 			"Beachvolleyball",
